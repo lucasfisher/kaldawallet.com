@@ -2,7 +2,7 @@
 //  - index.html from src/home.html
 //  - guides/ from data/tutorials.json (exported from the app's Profile → Tutorials)
 //  - coins.html and accounts/ from the data below
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from "node:fs";
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -88,11 +88,41 @@ const head = (crumbs, title, lead) => `
     </div>
   </div>`;
 
+/* ---------- App screenshots (assets/screens/NN-name.png; any that exist are shown) ---------- */
+
+const SHOTS = {
+  "01-welcome": "Welcome",
+  "02-wallet": "Your wallet",
+  "03-swap": "Swap any coin",
+  "04-swap-path": "The road a swap takes",
+  "05-pay-tree": "Pay from several coins",
+  "06-analytics": "Trading analytics",
+  "07-positions": "Positions",
+  "08-account-type": "Pick your account type",
+  "09-coin": "A coin's page",
+  "10-receive": "Get paid",
+  "11-send-review": "Check before you send",
+  "12-link-up": "Link Up",
+  "13-stake": "Stake and earn",
+  "14-xrp-tools": "XRP tools",
+  "15-guide": "Guides in the app",
+  "16-messages": "Secret messages",
+};
+const hasShot = (name) => existsSync(`assets/screens/${name}.png`);
+function phones(names, cls = "") {
+  const list = names.filter(hasShot);
+  if (!list.length) return "";
+  return `<div class="phones ${cls}">
+        ${list.map((n) => `<figure class="phone"><img src="/assets/screens/${n}.png" alt="Kalda app: ${SHOTS[n]}" loading="lazy"><figcaption>${SHOTS[n]}</figcaption></figure>`).join("\n        ")}
+      </div>`;
+}
+
 /* ---------- Account types ---------- */
 
 const ACCOUNTS = [
   {
     key: "personal",
+    shots: ["02-wallet", "10-receive", "11-send-review", "12-link-up"],
     emoji: "🙂",
     name: "Personal",
     tagline: "Send and receive crypto, simply.",
@@ -110,6 +140,7 @@ const ACCOUNTS = [
   },
   {
     key: "business",
+    shots: ["14-xrp-tools", "02-wallet"],
     emoji: "💼",
     name: "Business",
     tagline: "Shared wallets, scheduled payments and locks.",
@@ -126,6 +157,7 @@ const ACCOUNTS = [
   },
   {
     key: "investment",
+    shots: ["13-stake", "07-positions", "04-swap-path"],
     emoji: "📈",
     name: "Investment",
     tagline: "Hold for the long run, stake and earn.",
@@ -143,6 +175,7 @@ const ACCOUNTS = [
   },
   {
     key: "trading",
+    shots: ["06-analytics", "07-positions", "04-swap-path"],
     emoji: "📊",
     name: "Trading",
     tagline: "Buy and sell over days or weeks.",
@@ -159,6 +192,7 @@ const ACCOUNTS = [
   },
   {
     key: "developer",
+    shots: ["09-coin", "04-swap-path", "15-guide"],
     emoji: "🛠",
     name: "Developer",
     tagline: "Everything, plus the developer tools.",
@@ -339,6 +373,10 @@ write(
     body: `${head("", "Coins and tokens", "Kalda holds over 30 coins and tokens, all backed up by the same 12 words.")}
   <div class="page-body">
     <div class="wrap">
+      <figure class="figure" style="max-width:640px;margin:0 auto 12px">
+        <img src="/assets/trade-graph.svg" alt="A wheel of the coins with a line for each pair Kalda can swap" width="1200" height="1200">
+      </figure>
+      <p class="note" style="margin:0 auto 48px">Every line is a pair you can swap in one step. <a href="/#swaps">How swaps work →</a></p>
       ${COIN_GROUPS.map((g) => `<h2 class="group">${g.title}</h2>
       <div class="chips">
         ${g.coins.map(([sym, name]) => `<span class="chip"><b>${name}</b><span>${sym}</span></span>`).join("\n        ")}
@@ -389,6 +427,7 @@ for (const a of ACCOUNTS) {
         </div>
       </div>
     </div>
+    ${a.shots.some(hasShot) ? `<div class="wrap" style="margin-top:40px">${phones(a.shots, "center")}</div>` : ""}
     <div class="wrap">
       <p class="note">Kalda asks for your account type when you first open it. You can change it any time on your Profile. Your coins and addresses stay the same; only the layout changes.</p>
       <div class="cards" style="margin-top:32px">
@@ -418,7 +457,22 @@ write(
     title: "",
     current: "/",
     description: "Kalda is a crypto wallet you look after yourself. Hold, send, receive and swap coins from one app, with one backup.",
-    body: readFileSync("src/home.html", "utf8").replace("<!-- ACCOUNT_CARDS -->", accountCards),
+    body: readFileSync("src/home.html", "utf8")
+      .replace("<!-- ACCOUNT_CARDS -->", accountCards)
+      .replace(
+        "<!-- SCREENS -->",
+        Object.keys(SHOTS).some(hasShot)
+          ? `<section id="screens" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>See it in action</h2>
+        <p>Real screens from the Kalda app.</p>
+      </div>
+      ${phones(Object.keys(SHOTS))}
+    </div>
+  </section>`
+          : "",
+      ),
   }),
 );
 
