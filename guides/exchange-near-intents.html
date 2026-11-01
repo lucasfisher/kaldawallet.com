@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NEAR Intents · Kalda Wallet</title>
+  <meta name="description" content="You say what you want; competing market makers race to fill it.">
+  <meta property="og:title" content="NEAR Intents · Kalda Wallet">
+  <meta property="og:description" content="You say what you want; competing market makers race to fill it.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/exchange-near-intents.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Exchanges</div>
+      <h1>NEAR Intents</h1>
+      <p class="lead">You say what you want; competing market makers race to fill it.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>NEAR Intents takes a different approach from a pool-based exchange. Instead of trading against a pool at whatever price the formula gives, you state what you want — this coin, for that coin, at least this much — and professional market makers compete to be the one who fills it.</p>
+        <p>Because they are competing, the price you get is the best one any of them will offer at that moment, rather than whatever a single pool happens to be at.</p>
+        <h3>What it means for you</h3>
+        <p>It reaches coins a pool-based network may not, because a market maker only needs to be willing to trade a coin, not to have a pool of it sitting there.</p>
+        <p>Swaps through it are often quick, since filling is a decision rather than a formula, and the coin you want can be paid out from stock a market maker already holds.</p>
+        <p>You are quoted a specific amount before you agree, and the quote expires — prices move, and nobody will hold an offer open indefinitely.</p>
+        <p>If nobody fills it, your coin comes back to you. You are not left waiting on a trade that silently never happened.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Intents rather than instructions</h3>
+        <p>An ordinary swap says how to trade: this pool, this path, this slippage. An intent says only what the outcome must be, and leaves how to achieve it to whoever takes it on. The people who do that — market makers, or solvers — compete on the outcome, so the path becomes their problem rather than yours.</p>
+        <h3>How a swap happens</h3>
+        <p>You are given a quote and an address to send your coin to. Once your deposit is seen, the market maker who quoted it is responsible for paying out the coin you asked for, to the address you named — which may be your own wallet or someone else's. The settlement of who owes what happens on the NEAR blockchain; the coins themselves live on their own chains and are carried across by bridges.</p>
+        <h3>Where the risk sits</h3>
+        <p>This design moves the trust question. A pool-based network holds your coin in pools secured by its own operators. Here, the assets being traded are moved across chains by bridges, and a bridge is a thing with its own security assumptions — usually a set of validators or a contract — which is not the same as holding native coins.</p>
+        <h3>What a swap costs</h3>
+        <ul><li>The ordinary fee for sending your coin on its own chain.</li><li>The spread the market maker takes, which is inside the quote rather than listed separately.</li><li>The cost of paying you out on the destination chain.</li></ul>
+        <h3>Why a quote expires</h3>
+        <p>A market maker quoting a firm price is taking on price risk for as long as the quote stands. The shorter the window, the tighter the price they can afford to offer. An expired quote is not a failure; it is the mechanism that makes a firm price possible at all.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Competition versus a formula</h3>
+        <p>An automated market maker prices by a public rule, so its price is predictable and its slippage is a function of depth. A competitive request-for-quote prices by auction, so the price is whatever the most aggressive participant will offer, bounded below by their own cost of hedging. The two have different failure modes: a pool is always available but can be drained or priced badly; an auction gives better prices when there is competition and nothing at all when there isn't.</p>
+        <h3>Settlement and the double-spend problem across chains</h3>
+        <p>The difficulty in any cross-chain fill is that the two legs happen on systems that cannot see each other, so one party is briefly exposed. Designs resolve this either by escrowing one leg under a condition the other leg reveals, or by having a settlement layer hold a record of obligations and net them. The second approach lets a market maker fill many trades against a balance rather than pre-funding each one, at the cost of requiring that settlement layer to be trusted for the accounting.</p>
+        <h3>Bridges as the real security boundary</h3>
+        <p>Where native assets are not held directly, the asset on the far side is a representation, and its soundness is exactly the soundness of whoever can mint it. The practical consequence is that the risk of such a swap is not the exchange's design but the weakest bridge in the path — historically the most frequently exploited component in this entire category of system. Evaluating one means asking who can issue the representation and what would have to fail for them to do so wrongly.</p>
+        <h3>Economic bounds on the price you receive</h3>
+        <p>A solver's quote is their expected exit price minus their cost of hedging, inventory and settlement, minus a margin. With several solvers quoting, competition pushes toward the best of those costs rather than the average, which is why such systems often beat a pool for liquid pairs and lose to one for obscure pairs where only a single participant is willing to quote at all.</p>
+        <h3>Verifying the fill</h3>
+        <p>Because the path is the solver's choice, a user cannot check the route and must instead check the outcome: that the asset identifier quoted is the asset identifier delivered, and that the amount meets the minimum agreed. An identifier that is echoed back in a different notation than it was requested in is a case worth handling deliberately — the check that matters is whether it denotes the same asset, not whether the strings match.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/exchange-thorchain.html"><small>Previous</small>THORChain</a>
+        <a class="next" href="/guides/exchange-uniswap.html"><small>Next</small>Uniswap</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

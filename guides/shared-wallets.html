@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Family and business wallets · Kalda Wallet</title>
+  <meta name="description" content="Separate XRP wallets that can need approvals from family members or partners.">
+  <meta property="og:title" content="Family and business wallets · Kalda Wallet">
+  <meta property="og:description" content="Separate XRP wallets that can need approvals from family members or partners.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/shared-wallets.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › XRP</div>
+      <h1>Family and business wallets</h1>
+      <p class="lead">Separate XRP wallets that can need approvals from family members or partners.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>A family or business wallet is a separate XRP wallet that a group shares, like a joint account. It comes from your same recovery phrase, so restoring your phrase brings it back. Create one in XRP tools, at the Expert level.</p>
+        <p>You choose who must agree before money leaves it: for example, two of three family members. One person asks to send, and the others approve on their own phones with their fingerprint or passcode.</p>
+        <p>A request can be shared as a message or QR code, swapped by Bluetooth when you're together, or posted for your co-signers to pick up in their own Kalda.</p>
+        <p>Co-signers only need Kalda with an XRP address; they don't need any XRP. The shared wallet can also hold and convert RLUSD, lock XRP and make scheduled payments, each with the group's approval.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Multi-signing</h3>
+        <p>The XRP Ledger lets an account attach a signer list: up to 32 other accounts, each with a weight, plus a quorum, the total weight needed. A transaction from that account is valid only if it carries signatures whose weights add up to the quorum. Signers don't need funded accounts of their own.</p>
+        <p>An account can also switch off its own key, so the signer list becomes the only way to spend. Then no single phone, not even the one that created the wallet, can move the funds alone. Changing the signer list, or switching the key back on, is itself a transaction that needs the quorum.</p>
+        <h3>Approving</h3>
+        <p>Each co-signer signs the very same transaction, and the signatures are combined. A signature covers every field, so an approval for one payment can't be reused for another, and nobody can change the amount or recipient once others have signed. Each transaction also has an expiry and a sequence number, so a request stops being valid once it expires or the wallet makes a different transaction first.</p>
+        <p>Requests can travel any way that's convenient: as text, as a QR code, over Bluetooth Low Energy between nearby phones, or through the XRP Ledger itself. Whatever the route, the ledger accepts the transaction only with enough valid signatures. Anything posted on the ledger is public and permanent.</p>
+        <h3>Costs</h3>
+        <p>Each extra signature adds a little to the network fee: a multi-signed transaction pays the base fee once for each signer plus one, still a fraction of a cent. The signer list holds one owner reserve (0.2 XRP) on top of the 1 XRP base reserve. Closing the wallet works like closing any XRP account: everything goes to another active account, and the network keeps 0.2 XRP.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Digital signatures</h3>
+        <p>A digital signature proves that the holder of a private key approved one exact message. The signer combines a hash of the message with their private key; anyone with the public key can check the result but can't produce a new valid signature. Change a single bit of the message and the signature no longer verifies.</p>
+        <h3>Weighted thresholds</h3>
+        <p>A k-of-n scheme needs any k of n parties to agree. Weighted multi-signing generalises it: each signer i has a weight wᵢ, and a group S of signers is enough when:</p>
+        <pre><code>Σ wᵢ  (i ∈ S)  ≥  quorum</code></pre>
+        <p>With weights 2, 1 and 1 and a quorum of 2, the first person alone, or the other two together, can approve. Choosing weights and quorum trades safety (how many people would have to collude to steal) against availability (how many must be reachable to spend).</p>
+        <h3>Multi-signing versus secret sharing</h3>
+        <p>Multi-signing keeps every key separate and lets the network count the signatures, so who approved is visible on the ledger. Threshold signatures and Shamir secret sharing instead split one key, so the result looks like a single ordinary signature. Shamir hides a secret as the constant term of a random polynomial over a finite field: any k points on it recover the secret by interpolation, while k − 1 points reveal nothing.</p>
+        <h3>Replay protection</h3>
+        <p>Each XRP Ledger account has a sequence number. A transaction is valid only with the account's next number, and only until its expiry ledger, so a signed transaction can run at most once, and a pending approval goes stale as soon as the account moves on.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/xrp-locks.html"><small>Previous</small>Locks and scheduled payments</a>
+        <a class="next" href="/guides/exchange-thorchain.html"><small>Next</small>THORChain</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

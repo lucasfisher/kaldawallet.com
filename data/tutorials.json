@@ -1,0 +1,1056 @@
+[
+ {
+  "title": "The basics",
+  "tutorials": [
+   {
+    "id": "wallet-and-phrase",
+    "title": "Your wallet and recovery phrase",
+    "summary": "Your 12 secret words are your wallet. Keep them safe.",
+    "body": {
+     "simple": [
+      "Kalda is a wallet you look after yourself. No bank or company holds your money for you, and nobody at Kalda can see it, freeze it or get it back for you.",
+      "When you made your wallet, you were shown 12 words. This is your recovery phrase: the master key to every coin in your wallet. One set of words covers them all.",
+      "Write the 12 words on paper, in order, and keep the paper somewhere safe and private. If your phone is lost or broken, these words bring your money back on a new phone. Anyone who sees them can take everything, so never show them to anyone.",
+      "To see the words again, go to Profile → Backup & security → Recovery phrase; you'll confirm it's you with your fingerprint, face or phone PIN first. On a new phone, choose “I already have a recovery phrase” and type the words in order.",
+      "Profile → Backup & security → Secret sharing lets you split a backup between people you trust. Reset wallet, at the bottom of Backup & security, wipes the wallet from this phone; only use it once your words are safely written down."
+     ],
+     "detailed": [
+      "## Self-custody",
+      "Your money lives on public blockchains, not inside the app. What the app holds is the key that proves you own it. Every payment is signed with that key on your phone, and the networks accept it because the signature checks out, not because any company approved it.",
+      "## An open standard",
+      "Your recovery phrase follows BIP-39, an open standard most wallets share. It turns a large random number into words from a fixed public list of 2,048 words, and the last word carries a checksum, so most typing mistakes are caught when you restore.",
+      "## One phrase, many coins",
+      "Open standards describe how a whole tree of keys can grow from one phrase, with a separate branch for each blockchain. That is why a single backup brings back Bitcoin, Ethereum, XRP, Zcash and the rest together, and why the same words can often be restored in other wallets that follow the same standards.",
+      "• Coins such as Bitcoin can use a fresh address for each payment; all of them belong to the same phrase.",
+      "• Restoring recreates the keys. The money itself never left the blockchains, so it is all still there.",
+      "## What a backup can't do",
+      "No standard lets anyone reset a lost phrase. Without the words, nobody can rebuild the keys, and a wiped phone cannot reach the money again."
+     ],
+     "complex": [
+      "## Entropy",
+      "A wallet begins with randomness. A 12-word phrase encodes 128 random bits plus a 4-bit checksum taken from a hash of those bits: 132 bits in total, split into twelve 11-bit numbers, each picking one word from a list of 2,048 (2^11).",
+      "`2^128 ≈ 3.4 × 10^38 possible phrases`",
+      "That number is far beyond what any computer could search by guessing, which is why a phrase never shown to anyone is safe, and why one that has been seen is not.",
+      "## From words to a seed",
+      "The words are fed through a key-stretching function: a hash-based function repeated thousands of times. The output is a 512-bit seed. Stretching makes each guess slow and costly for an attacker, while costing one user almost nothing.",
+      "## Hierarchical deterministic keys",
+      "From the seed, a one-way function produces a master key and then child keys, level by level, like branches of a tree. Each child is computed from its parent and an index number, so the same seed always rebuilds the same tree, while knowing one branch reveals nothing about its parent or siblings.",
+      "## Public-key cryptography",
+      "Each private key is a secret number. Multiplying a fixed point on an elliptic curve by that number gives the public key; addresses are derived from public keys. Going forwards is easy, but going backwards, recovering the number from the point, is the elliptic-curve discrete logarithm problem, believed infeasible for today's computers.",
+      "`public key = private key × G`",
+      "A digital signature proves knowledge of the private key for one specific message without revealing the key, and anyone holding the public key can verify it. That is all a blockchain needs to decide whether a payment is valid."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "send-receive",
+    "title": "Sending and receiving",
+    "summary": "How to get paid, how to pay, and how to do it safely.",
+    "body": {
+     "simple": [
+      "An address is like an account number for one coin. Give it to people so they can pay you. It's safe to share: nobody can take money out of your wallet with it.",
+      "To get paid, open a coin on the Wallet tab and tap Receive. Show the QR code, or tap Copy address and send it. For Bitcoin, Litecoin, Dogecoin and Bitcoin Cash you can tap New address for a fresh one; older ones keep working.",
+      "To pay, open a coin, tap Send, then pick a contact, paste an address or scan a QR code, and type the amount. You'll see who you're paying and how much, then confirm with your fingerprint, face or PIN.",
+      "Check the whole address before you send, and stop if you see a warning such as “Possible scam address”. A payment can't be cancelled or undone once sent.",
+      "Each payment costs a small network fee, paid to the network, not to Kalda. Sending XRP to an exchange? Enter the destination tag they give you in the tag box."
+     ],
+     "detailed": [
+      "## Every coin is its own network",
+      "Bitcoin, Ethereum, XRP and the others are separate blockchains with their own address formats. A coin can only be received at an address on its own network: sending Bitcoin to an Ethereum address doesn't work.",
+      "## Fees",
+      "Each network sets its own fee rules. Bitcoin-style networks price block space by size, so busier times cost more. Ethereum and similar chains charge gas, priced by a market the network runs itself. The XRP Ledger destroys a tiny fee with each transaction. Tokens such as USDC on Ethereum pay their fee in the chain's own coin, so you need a little ETH to send them.",
+      "## Reserves",
+      "Some networks ask accounts to hold a minimum. The XRP Ledger requires a small reserve in every account, plus a little more for each object the account owns, and a new XRP address only exists once it receives at least that reserve. Solana has a similar rule for tiny balances.",
+      "## Finality",
+      "A payment is final once the network includes it in its ledger. Bitcoin-style coins grow more certain with each new block (each “confirmation”); the XRP Ledger settles in a few seconds. No public blockchain has a chargeback or undo.",
+      "## Destination tags",
+      "The XRP Ledger lets one address serve many customers by adding a number, the destination tag, to each payment. Exchanges rely on it to know whose deposit it is, so always include the tag they give you.",
+      "## Lookalike addresses",
+      "Because anyone can send a tiny payment to anyone, scammers plant addresses that share the first and last few characters of ones you use. This is called address poisoning. Paying saved contacts, and reading the whole address, defeats it."
+     ],
+     "complex": [
+      "## Two ledger models",
+      "Blockchains keep balances in one of two ways. In the UTXO model (Bitcoin, Litecoin, Dogecoin, Zcash's transparent pool), money exists as separate unspent outputs, like banknotes; a payment consumes some outputs and creates new ones, one of which may return change to you. In the account model (Ethereum, XRP, Solana), the ledger keeps a balance per address and a payment debits one and credits another.",
+      "`inputs = outputs + fee`",
+      "## Signing a transaction",
+      "A transaction states what moves where. The wallet hashes it and signs the hash with the private key. Every node checks the signature against the public key before accepting it, so a transaction can't be altered after signing without becoming invalid.",
+      "## Consensus and finality",
+      "Proof-of-work chains order transactions by having miners compete to find a hash below a target; each new block on top makes reversing an older one exponentially harder, which is why confirmations accumulate. Proof-of-stake and federated-consensus ledgers (such as Ethereum or the XRP Ledger) instead reach agreement among validators, and a transaction becomes final once enough of them vote for it.",
+      "## Fee markets",
+      "Block space is scarce, so users bid for it. On Ethereum, each block has a base fee that rises when blocks are full and falls when they're empty, and that part is burned; a small tip on top goes to the block producer. Bitcoin uses a simpler auction where the highest fee per byte tends to be included first.",
+      "## Checksums in addresses",
+      "Most address formats include a checksum, a short code computed from the rest of the address, so a single mistyped character is detected before any payment is made. A checksum catches accidents, not deliberate lookalikes: a scammer's address is perfectly valid.",
+      "## Fresh addresses",
+      "On UTXO chains, nothing forces you to reuse an address. Giving each payer a different address keeps strangers from adding up your payments on a public blockchain, even though all the addresses come from the same keys."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "contacts-link-up",
+    "title": "Contacts and Link Up",
+    "summary": "Swap addresses safely with people, in person or by message.",
+    "body": {
+     "simple": [
+      "Contacts are the people you pay. Once someone is saved, you can pay them without ever typing their long address. Find them on the Contacts tab.",
+      "The easiest way to add someone is Link Up: on Contacts, both tap Link Up while standing near each other, then tap each other's name. Your phones swap details over Bluetooth, locked so nobody nearby can read them.",
+      "Both phones then show a six-digit code. Check the codes match before you save. If they do, the addresses came straight from your friend's phone, and the contact is marked “Verified in person”.",
+      "Far apart? Use Share my contact to send a locked contact card by email or message, and tell your friend the password a different way, such as a phone call.",
+      "You choose which coins' addresses to share. Contacts never get your recovery phrase, your balances or any way to spend your money."
+     ],
+     "detailed": [
+      "## Bluetooth Low Energy",
+      "Link Up uses Bluetooth Low Energy, the short-range radio standard built into every modern phone. Phones nearby can announce themselves and connect directly, with no internet, no server and no account in between.",
+      "## Encryption without a shared password",
+      "The two phones agree on a secret key over the air using public-key key agreement, a standard technique: someone listening to the radio sees everything that's sent, yet still can't work out the key. Each phone's details are then encrypted with that key.",
+      "## Why the code matters",
+      "Key agreement alone can't tell you who is on the other end. An attacker sitting in the middle could agree one key with you and another with your friend. The six-digit code is drawn from the agreed key, so if anyone is in the middle, the codes on the two phones differ. Comparing them face to face closes that gap.",
+      "## Signed contact cards",
+      "A contact card is locked with a password you choose and signed with a key that belongs to your wallet. Your friend's phone can check the signature, so a card that was changed on the way is caught, and a later card from you updates your contact instead of creating a stranger.",
+      "## Private and public addresses",
+      "• On Bitcoin-style coins and Monero, each person you share with can get an address of their own, so two contacts comparing notes can't link your payments.",
+      "• On account-based networks such as Ethereum, XRP or Solana, an address is public: anyone who has it can look up its full history and balance. Share those only when you need to."
+     ],
+     "complex": [
+      "## The key-exchange problem",
+      "Two strangers want a shared secret, but every message between them can be overheard. Diffie–Hellman key agreement solves this: each side picks a secret number, publishes a value derived from it, and combines its own secret with the other's public value. Both arrive at the same result; an eavesdropper, holding only the public values, cannot.",
+      "`shared = a × (b × G) = b × (a × G)`",
+      "Modern systems do this on an elliptic curve, where a × G is easy to compute but recovering a from it is infeasible.",
+      "## Man-in-the-middle attacks",
+      "Diffie–Hellman proves you share a key with someone, not with whom. An active attacker can run two separate exchanges, relaying and reading everything. The defence is authentication: confirming, over a channel the attacker can't fake, that both sides hold the same key.",
+      "## Short authentication strings",
+      "One elegant form of authentication is a short code derived from the shared key, read by two people standing side by side. A middle attacker holds two different keys, so the two codes match only by chance: about one in a million for six digits. The human eye becomes the trusted channel.",
+      "## Authenticated encryption",
+      "Once a key is agreed, data is sealed with an authenticated cipher, which both hides the content and attaches a tag computed from it. Any change in transit makes the tag check fail, and the message is rejected rather than misread.",
+      "## Password-based encryption and signatures",
+      "A password is too weak to be a key directly, so it is first run through a deliberately slow, memory-hungry stretching function that makes every guess expensive. A digital signature then proves who made the content: only the holder of the private key can produce it, and anyone with the public key can check it."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "swaps",
+    "title": "Swapping coins",
+    "summary": "Swap one coin for another without an exchange account.",
+    "body": {
+     "simple": [
+      "Swapping means trading one coin for another, for example Bitcoin for Ethereum. Open the Swap tab: there's no account to open, and the swap goes straight from your wallet to your wallet.",
+      "Pick the coin you have, the coin you want and an amount (or tap Max). You'll see roughly how much you'll get and the fees before you confirm with your fingerprint, face or PIN.",
+      "The light at the top is green when the pair can be traded now, and red when the network has paused one of the coins.",
+      "Most swaps take a few minutes, longer for Bitcoin-family coins. Follow their progress on the History tab. If a swap can't be completed, your coins come back to you, minus fees.",
+      "Part of the cost is fixed, so very small swaps lose a bigger share to fees. If the fees are high, you'll be warned before anything is sent."
+     ],
+     "detailed": [
+      "## The swap network",
+      "Swaps run through a decentralised cross-chain liquidity network. It holds pools of real coins on each blockchain it supports, secured by independent node operators, and trades between them without you ever opening an account.",
+      "## How a swap happens",
+      "You send your coin to the network's address on that chain, with a short instruction attached saying which coin you want and where to send it. The network sees the deposit, swaps it through its pools, and pays the new coin out to your own address on the other chain.",
+      "## Quotes are estimates",
+      "A quote shows the expected amount out and the fees at that moment. Prices in the pools move with every trade, so what arrives can be a little different. Quotes also expire after a short while, because the network rotates the addresses it receives on.",
+      "## What you pay",
+      "• The normal network fee for sending your coin.",
+      "• The network's fees: a liquidity fee that grows with the size of your trade relative to the pool, and an outbound fee for paying you on the other chain.",
+      "• On most swaps, a small Kalda fee, included in the quote you see.",
+      "## Pauses and refunds",
+      "Node operators can pause trading on a chain, for example during an upgrade or an incident; the swap screen then says the swap isn't available right now. If the network can't complete a swap, its rules send the original coin back to where it came from, minus fees. A sister network built the same way covers some coins the main one doesn't, such as Cardano."
+     ],
+     "complex": [
+      "## Automated market makers",
+      "A traditional exchange matches buyers with sellers in an order book. An automated market maker instead holds two assets in a pool and sets the price by a formula. The best-known is the constant-product rule: the product of the two reserves stays the same across a trade.",
+      "`x × y = k`",
+      "If a pool holds x of one coin and y of another, adding Δx of the first returns Δy of the second such that (x + Δx)(y − Δy) = k. The bigger your trade relative to the pool, the further the price moves against you: this is slippage, or price impact.",
+      "## Continuous liquidity pools",
+      "Some cross-chain networks use a variant where the fee itself grows with the trade's size relative to the pool depth, so large trades pay proportionally more and pools are protected from being drained cheaply. Pairing every asset with one settlement asset lets any coin be swapped for any other in two hops.",
+      "## Arbitrage keeps prices honest",
+      "Pool prices only know what traders do to them. When a pool drifts away from the wider market, arbitrageurs buy the cheap side and sell the dear side until the gap closes. This is what keeps an automated pool roughly in line with prices elsewhere.",
+      "## Threshold signatures and vaults",
+      "A cross-chain network must hold real coins on blockchains that know nothing about it. Threshold signature schemes let a group of nodes jointly control one address so that a large enough subset must cooperate to sign, while no single node ever holds the full private key. Rotating the group regularly limits the damage if some members misbehave.",
+      "## Observing other chains",
+      "The network's validators each watch the external blockchains and vote on what they see. Only once enough of them agree that a deposit happened is it acted on, which is why swaps from slower chains wait for confirmations first."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "swap-flow",
+    "title": "The chart on a swap",
+    "summary": "What the picture on a swap review is telling you.",
+    "body": {
+     "simple": [
+      "Before a swap goes ahead, Kalda draws it as a picture so you can see the whole journey your money takes before you agree to it.",
+      "Each circle is a coin your money passes through. The first is what you're spending, the last is what you'll end up with. An arrow between two circles is one move, named for the exchange that makes it. The exchanges get circles of their own, each wearing its logo — THORChain (RUNE's), NEAR Intents (NEAR's) and Uniswap (its unicorn): your coin is sent into it on one arrow, it makes the swap, and the new coin leaves it on the next arrow, to your wallet or straight to your contact's. A swap through two exchanges shows both.",
+      "The number on the left of an arrow is what that move costs: the network fee to send the coin, plus what the swap itself takes. Add them up and you have the cost of the whole swap — there's nothing hidden between the circles.",
+      "The words on the right of an arrow say what happens for that move, in order.",
+      "Sometimes there are three circles instead of two. That means your coin can't be traded directly for the one you want, so it goes through a coin in the middle. You pay for two moves instead of one, which is why the chart shows them separately rather than adding them together.",
+      "Don't care for the picture? Tap the Swap path heading and it folds to one line. It stays folded on every swap until you tap it again.",
+      "## While it's happening",
+      "Once you've agreed, the same chart appears on the History tab and fills in as the swap goes: a circle turns green when your money has reached that coin, and an arrow turns green when that move is done. Whatever is happening right now is lit up, and what hasn't started yet stays dim.",
+      "If something goes wrong, that part turns red — so you can see exactly how far your money got, rather than only that it didn't arrive.",
+      "A swap with more circles isn't more dangerous, but it does have more to pay for and more to wait for."
+     ],
+     "detailed": [
+      "## Why a swap has a shape at all",
+      "No single pool holds every pair of coins. Trading between two coins means finding a path through pools that do exist, and that path is what the chart draws. A direct pair is one move; anything else goes through a widely traded coin in the middle, because that is where the liquidity is.",
+      "## Nodes and edges",
+      "Each circle is an asset the value takes the form of along the way. Each arrow is a settlement: a transaction on a blockchain, or a trade inside a pool. The distinction matters for timing, because a move that has to be confirmed by a blockchain waits for blocks, while a move inside one contract does not.",
+      "## The cost on each arrow",
+      "Every move has its own cost and they are not the same kind of cost. Sending a coin to begin with costs that blockchain's own fee. A trade inside a pool costs a share of what passes through it, which grows with the size of your trade relative to the pool. Being paid out on another blockchain costs that chain's fee, paid for you out of the proceeds. Showing them per move is what makes it possible to see which part of a swap is expensive.",
+      "## Two moves mean two prices",
+      "A two-move swap is quoted as two prices, not one. The first is known when you agree; the second is quoted again when the middle coin actually arrives, because by then the market has moved. If the second price has fallen further than you agreed to tolerate, you're asked before anything else is sent, and your money is sitting in your own wallet in the middle coin while you decide.",
+      "## Why the progress can stall and still be fine",
+      "The chart fills in as each move settles. Moves across blockchains wait for confirmations, which is why a swap can sit on one arrow for minutes without anything being wrong. The lit step is the network's own description of what it is doing, not an estimate.",
+      "## When a move fails",
+      "A failed move is shown in place, red, with the earlier moves still green. That is the honest picture: the value really did get that far. What happens next depends on where it stopped — a failed first move is refunded to where it came from, while a failed later move leaves the middle coin in your wallet, yours to finish or keep."
+     ],
+     "complex": [
+      "## Swaps as a path in a graph",
+      "Treat assets as vertices and pools as edges: a swap is a path, and its output is the composition of each edge's price function. With a constant-product pool the output of one hop is",
+      "`Δy = y·Δx / (x + Δx)`",
+      "so composing two hops multiplies both the price impacts and one minus each fee. Two 0.3% hops cost about 0.6%, and the impacts compound rather than add. This is why a direct pair, where one exists with real depth, beats a two-hop path of similar size — and why the comparison must be made on the output after fees rather than on the quoted rate.",
+      "## Why hub-and-spoke topologies exist",
+      "A network supporting n assets would need n(n−1)/2 pools to offer every pair directly, each needing its own liquidity. Pairing every asset against one settlement asset instead needs n pools and gives every pair in two hops. The cost of that economy is paid by the trader, in a second hop's fee and impact; the benefit is that liquidity is not fragmented across thousands of thin pools.",
+      "## Execution risk between the hops",
+      "A multi-hop swap that cannot settle atomically — because the hops are on different blockchains — has real exposure between them. The holder is exposed to the middle asset's price for as long as settlement takes, and the second hop's price is unknowable when the first is signed. Mitigations are all variations on bounding the loss rather than removing it: a minimum output on each hop, a tolerance agreed in advance, and quoting the later hop fresh at the moment it is sent.",
+      "## Cost attribution",
+      "Costs on such a path fall into three kinds that scale differently: a per-transaction cost, which is fixed and therefore dominates small trades; a proportional fee, flat in percentage terms; and price impact, which grows superlinearly with size relative to depth. A chart that shows a single total cannot express this. Per-edge costs can, which is why the breakdown is per move: it is the only presentation in which a user can see that their trade is too small for the fixed part, or too large for the pool.",
+      "## Observability as a design constraint",
+      "A path crossing several settlement systems has no single authority that knows its state. Progress is inferred: by watching for a deposit's confirmations, by a contract event, by a payout appearing at a destination address. Each inference has its own latency and its own failure mode, which is why a truthful progress display distinguishes “not yet observed” from “failed” rather than collapsing both into an error."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "activity",
+    "title": "History",
+    "summary": "See what you've sent, received and swapped.",
+    "body": {
+     "simple": [
+      "The History tab, in the bar at the bottom, is your wallet's diary: money you've sent, received and swapped, newest first.",
+      "Use the two buttons at the top to show only payments with one contact, or only one coin. Tap Show all to clear them. A contact's card also has Show history.",
+      "A payment shows “Pending” while the network is still working on it and “Confirmed” once it's done; a swap that was refunded shows as failed. Tap a row to open it on a public website for that coin.",
+      "Where possible, you'll see who paid you, such as a contact's name or a swap payout. Your history stays on this phone; it isn't part of your recovery phrase, so a new phone may start with a shorter list."
+     ],
+     "detailed": [
+      "## Public ledgers",
+      "Every public blockchain keeps a permanent record of every transaction. Anyone can read it, so a wallet's history can be rebuilt for many coins just from its addresses.",
+      "## Block explorers",
+      "A block explorer is a public website that displays a blockchain in readable form: transactions, blocks, addresses and confirmations. Opening a payment there lets you check it independently of any wallet.",
+      "## Confirmations and finality",
+      "• On Bitcoin-style networks, a payment waits in a public queue of unconfirmed transactions (the mempool) and then gains a confirmation with each new block.",
+      "• The XRP Ledger finalises payments in seconds, so there's nothing to count.",
+      "• A swap passes through stages on the swap network: deposit seen, swapping, paying out, then done or refunded.",
+      "## Private payments",
+      "Shielded Zcash and Monero payments are encrypted on their blockchains. Outsiders can't read them; only your own keys can find and decrypt the ones meant for you.",
+      "## Privacy on transparent chains",
+      "On transparent blockchains, anyone with one of your addresses can see that address's history. Using a fresh address for each person, where the coin allows it, makes your payments harder to link together."
+     ],
+     "complex": [
+      "## Blocks and hash chains",
+      "A blockchain groups transactions into blocks, and each block contains the cryptographic hash of the one before it. Changing any old transaction would change that block's hash and break every link after it, which is what makes the record tamper-evident.",
+      "`header(n) = H(header(n−1), Merkle root, …)`",
+      "## Merkle trees",
+      "The transactions in a block are hashed in pairs, and those hashes paired again, up to a single Merkle root stored in the block header. Proving a transaction is in a block then needs only a short path of hashes, not the whole block: this is how light clients verify payments cheaply.",
+      "## Probabilistic and deterministic finality",
+      "In proof-of-work chains, a block can in theory be replaced by a longer competing chain, but the chance falls rapidly with each block built on top, so confirmations measure confidence. Byzantine-fault-tolerant ledgers decide finality by validator vote: once agreed, a transaction is final immediately.",
+      "## Indexing",
+      "Blockchains are organised by block, not by address, so answering “what happened to this address?” requires an index built by reading every block. Public indexers do this work and serve the results; they can see which addresses are being asked about, though never any keys.",
+      "## Trial decryption",
+      "On privacy chains, outputs are encrypted to the recipient. A wallet finds its own payments by trying to decrypt each new output with its viewing key; only the intended recipient's key succeeds. History there can't come from an outside index: it has to be found with the keys themselves."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "security",
+    "title": "Keeping your wallet safe",
+    "summary": "The locks that protect you, and the scams to watch for.",
+    "body": {
+     "simple": [
+      "Kalda locks whenever you leave the app. Open it with your fingerprint, your face, or your phone's PIN, pattern or password. Your phone needs a screen lock for this to work.",
+      "You'll be asked again before every payment or swap, and before your recovery phrase is shown, so someone holding your unlocked phone still can't send your money.",
+      "Screenshots are blocked on screens that show secrets, and addresses you copy are cleared from the clipboard after a short while.",
+      "Never tell anyone your 12 words and never type them into a website or another app. Nobody from Kalda will ever ask for them; anyone who does is trying to steal from you.",
+      "Before paying, check the whole address and slow down if someone is rushing you. Pay saved contacts rather than copying addresses from your history."
+     ],
+     "detailed": [
+      "## Your phone's own security",
+      "The app lock uses the authentication your phone already provides: fingerprint, face, PIN, pattern or password. Modern phones keep secrets in a hardware-backed secure area designed so other apps can't read them, even on the same device.",
+      "## Asking again for every payment",
+      "Unlocking the app lets you look around. Moving money, revealing your phrase and other sensitive steps each need a fresh check, so a phone left unlocked on a table is still not enough to spend.",
+      "## What no lock can protect",
+      "• Your recovery phrase works on its own. Anyone who has the words can rebuild your wallet on any device, without your phone or your fingerprint.",
+      "• Blockchain payments are final. A payment to a scammer is a valid transaction, and no network has a chargeback.",
+      "• A phone infected with malware can watch the screen. Keep your phone updated and install apps only from sources you trust.",
+      "## Common scams",
+      "• Fake support, “wallet validation” or “sync” requests that ask for your phrase or ask you to scan a code into another app.",
+      "• Address poisoning: tiny payments from lookalike addresses, planted so you copy the wrong one from your history.",
+      "• Addresses swapped in emails, chats or web pages. Link Up with matching codes, and signed contact cards, avoid this.",
+      "• Urgency: real people rarely need money “right now”."
+     ],
+     "complex": [
+      "## Secure hardware",
+      "Many phones include a secure element or trusted execution environment: a small, isolated processor with its own memory. Keys generated there can be used to encrypt and decrypt but are designed never to leave it, so even software with full control of the main system can't simply copy them out.",
+      "## Biometrics as a gate",
+      "A fingerprint or face scan isn't a key itself. The phone's secure hardware compares the scan to a stored template and, on a match, releases permission to use a key it guards. The biometric data never needs to leave the device.",
+      "## Defence in depth",
+      "Security engineers layer independent protections so that one failure isn't fatal: a device lock, an app lock, a fresh check for each sensitive action, and limits on what the screen and clipboard expose. An attacker has to defeat several of them, not just one.",
+      "## The threat model",
+      "Every system protects against some attackers and not others. A self-custody wallet defends well against a thief holding a locked phone, but cannot defend against someone who already has the recovery phrase, or against a user persuaded to sign a payment. Knowing which is which is the core of staying safe.",
+      "## Social engineering",
+      "Most crypto losses come not from broken cryptography but from people being persuaded to reveal a secret or approve a payment. Scams lean on urgency, authority and fear. Because a signed blockchain transaction can't be reversed, the only reliable defence is to slow down and verify through a channel you already trust.",
+      "## Network privacy",
+      "Reading a balance means asking some server about an address. The server never learns your keys, but it can see which addresses are asked about together and from which network location, and could link them. Fresh addresses limit what the blockchain reveals, not what a data provider can observe."
+     ]
+    },
+    "hasSkinsLimited": false
+   }
+  ]
+ },
+ {
+  "title": "Privacy",
+  "tutorials": [
+   {
+    "id": "shielded-zcash",
+    "title": "Private Zcash (shielded balance)",
+    "summary": "Keep ZEC payments private: amounts, senders and notes hidden.",
+    "body": {
+     "simple": [
+      "Zcash (ZEC) can be held in two ways. Public ZEC is like a shop window: anyone can see how much is there and where it goes. Private ZEC, called shielded, is like a sealed envelope: the amount, who sent it and any note inside stay hidden from everyone else.",
+      "On the ZEC page, flip the ZEC card to its private side to see your shielded balance. Whichever side is showing decides what Send and Receive do, so you can pay and get paid privately. After you open the app, the private balance can take a moment to catch up.",
+      "Shield ZEC moves your public ZEC into your private balance; Unshield ZEC moves some back to the public side. Exchanges usually only pay public addresses, so give them your public ZEC address.",
+      "Tip: moving ZEC between the two sides can be seen publicly. Leave some time between moves and avoid shielding and unshielding the exact same amount, so nobody can match them up.",
+      "Every account type is private: Kalda uses your private ZEC on its own. The card's private side shows with the Developer account type."
+     ],
+     "detailed": [
+      "## Two pools in one coin",
+      "Zcash is a public blockchain with two kinds of value. Transparent ZEC (addresses starting t1) works like Bitcoin: amounts and addresses are public. Shielded ZEC lives in shielded pools, where the network verifies every payment without seeing the amount, the sender or the recipient.",
+      "• Sapling (2018) was the first widely used shielded pool; its addresses start with zs1.\n• Orchard (2022) removed the need for a trusted setup.\n• Ironwood, introduced by the NU6.3 network upgrade in 2026, is the pool that receives new shielded value; Orchard notes can still be spent out.",
+      "## Unified addresses",
+      "A unified address (it starts with u1, defined in ZIP 316) bundles several receivers into one string. A paying wallet must use the most private receiver it supports, so wallets that handle shielded payments pay you privately.",
+      "Every shielded payment can carry an encrypted note (a memo) of up to 512 bytes that only the recipient can read. Fees follow ZIP 317, Zcash's published fee rule: a typical shielded payment costs 0.0001 ZEC, a little more when it combines many smaller amounts.",
+      "## Light-wallet servers",
+      "A phone can't hold the whole Zcash blockchain, so light wallets download compact blocks from a light-wallet server (lightwalletd is open source, and anyone can run one). The wallet recognises its own payments on the device; the server never gets the keys, though like any server it sees the connecting IP address."
+     ],
+     "complex": [
+      "## Commitments instead of balances",
+      "A shielded pool doesn't record who owns what. Each payment creates notes: small records of a value, an owner and some randomness. Only a commitment to each note is published, a cryptographic fingerprint that binds the note's contents without revealing them. All commitments are collected in an append-only Merkle tree, whose root summarises every note ever created.",
+      "## Nullifiers stop double spending",
+      "Spending a note publishes its nullifier, a value derived from the note and the owner's secret key. Anyone can check that a nullifier has never appeared before, yet nobody can tell which commitment it belongs to. The same note always gives the same nullifier, so it can't be spent twice.",
+      "## Zero-knowledge proofs",
+      "Each spend carries a zk-SNARK: a short proof that the spender knows a note in the tree, holds its key, computed the nullifier correctly, and that inputs equal outputs plus the fee, all without revealing any of those values. Sapling uses Groth16 proofs on the BLS12-381 curve, which needed a one-time trusted-setup ceremony; Orchard-style pools use Halo 2 on the Pallas and Vesta curves, which needs none.",
+      "## Finding your payments",
+      "Each note is encrypted to its recipient with elliptic-curve Diffie–Hellman key agreement: the sender combines a fresh random key with the recipient's address to reach a shared secret that only the recipient can also compute. A wallet tries to decrypt every new shielded output with its incoming viewing key, and only its own succeed. This is called trial decryption.",
+      "## What stays visible",
+      "Moving value between the transparent and shielded sides is public on the transparent side, so matching amounts and timing can link the two moves. Inside the pool, privacy grows with the anonymity set: the more people use shielded payments, the harder any one note is to trace."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "stealth-addresses",
+    "title": "Private ETH, BNB and AVAX (stealth addresses)",
+    "summary": "Get paid at a brand-new address every time, so payments can't be traced to you.",
+    "body": {
+     "simple": [
+      "On Ethereum, BNB Chain and Avalanche, anyone can look up an address and see every payment it has received. A private address fixes that for the person being paid.",
+      "It's like handing out a secret code instead of your home address: each person who pays you turns the code into a brand-new address used only once, and only your phone can tell those payments are yours.",
+      "Share your private address with contacts through Link Up. When you pay a contact who has shared theirs, the payment goes privately on its own. The private side of the ETH, BNB and AVAX cards shows and spends what you've received this way. It works for ETH, BNB and AVAX themselves, not for tokens.",
+      "When you pay privately, you choose whether to let them see it's from you. Paying from your private balance keeps your public wallet out of it; paying from your public wallet hides who you paid, but not that you paid.",
+      "Good to know: private addresses hide who was paid, not how much. Each payment costs network fees (gas), and spending several private amounts together can link them; you'll be warned before that happens."
+     ],
+     "detailed": [
+      "## An open standard",
+      "Stealth addresses on Ethereum-style networks follow ERC-5564, a public standard. Any wallet that supports it can pay your stealth meta-address, which starts with st:eth: and works the same on Ethereum, BNB Smart Chain and Avalanche C-Chain.",
+      "## Two transactions per payment",
+      "• An announcement, posted to a public announcer contract shared by every ERC-5564 wallet, carrying what the recipient needs to recognise the payment.\n• The payment itself, to a fresh one-time address.\nBoth pay gas.",
+      "## Finding and spending",
+      "The recipient's wallet reads the public announcements and tests each one with a private viewing key; a one-byte view tag lets it skip almost all of other people's announcements quickly. Each one-time address is an ordinary account: it holds its own funds, pays its own gas, and its private key can be worked out only by the recipient.",
+      "## What stays public",
+      "• Amounts are visible on-chain.\n• Paying from a public address shows that address as the payer.\n• Spending from several one-time addresses at once links them.\n• Exchanges and wallets without ERC-5564 support can't pay a stealth meta-address."
+     ],
+     "complex": [
+      "## Diffie–Hellman on an elliptic curve",
+      "Stealth addresses rest on elliptic-curve Diffie–Hellman. On a curve with generator point G, a private key is a number k and its public key is the point K = k·G. Two parties with keys (a, A) and (b, B) can each compute the same point a·B = b·A = ab·G, while an observer who sees only A and B cannot.",
+      "## Building a one-time address",
+      "In ERC-5564's scheme for the secp256k1 curve, the recipient publishes two public keys, a spending key P_spend and a viewing key P_view. The payer picks a random ephemeral key r and computes:",
+      "`R = r·G\ns = r·P_view\nh = keccak256(s)\nview tag = first byte of h\nP_stealth = P_spend + h·G\naddress = last 20 bytes of keccak256(P_stealth)`",
+      "The payer publishes R and the view tag. The recipient reaches the same secret as s = p_view·R with the private viewing key, derives h, and checks whether P_spend + h·G gives the announced address. The view tag rejects about 255 in 256 unrelated announcements after a single hash.",
+      "## Spending, and why there are two keys",
+      "The one-time address's private key is p_spend + h (mod n), where n is the order of the curve, so only the holder of p_spend can compute it. Splitting the keys means a viewing key can find payments without being able to spend them.",
+      "## Limits of the model",
+      "Stealth addresses break the link between a recipient and their payments; they don't hide amounts or the payer's address. Behaviour matters too: funding one-time addresses from a known wallet, or spending them together, recreates the links the scheme removes."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "fresh-addresses",
+    "title": "Fresh addresses",
+    "summary": "A different address for each person, so your payments can't be lined up.",
+    "body": {
+     "simple": [
+      "On Bitcoin and some other coins, anyone can look up an address and see every payment it has ever received. If everyone pays you at the same address, they can all see each other's payments.",
+      "So each contact you share with gets their own address, like giving each friend a different letterbox. On the Receive screen, New address makes a fresh one whenever you like, for example for a one-off payment.",
+      "You don't need to do anything else. Old addresses keep working, everything adds up to one balance, and your recovery phrase brings them all back. Profile → Backup & security → My keys lists every address with what it holds.",
+      "This works on Bitcoin, Litecoin, Dogecoin, Bitcoin Cash and Monero. Tip: sending everything at once (Max) combines all your coins in one payment, which shows they belong together."
+     ],
+     "detailed": [
+      "## Coins that work like cash",
+      "Bitcoin, Litecoin, Dogecoin and Bitcoin Cash use the UTXO model: your balance is a collection of separate coins (unspent transaction outputs), each locked to an address. A wallet can use as many addresses as it likes, and the network treats them all alike.",
+      "Account-based networks such as Ethereum, the XRP Ledger and Solana work differently: one address holds one running balance, so a fresh address would be a separate account. On Ethereum, BNB Chain, Avalanche and Polygon, stealth addresses give the same benefit.",
+      "## One phrase, endless addresses",
+      "Hierarchical deterministic (HD) wallets, an open standard most wallets share, turn one recovery phrase into a numbered sequence of addresses. Restoring the phrase recreates the same sequence. Wallets find used addresses by checking them in order until they meet a run of unused ones, a convention known as the gap limit.",
+      "## Monero subaddresses",
+      "Monero is already private on-chain, but its subaddresses let you give different people different addresses for one wallet, so two people can't compare notes and discover they're paying the same person."
+     ],
+     "complex": [
+      "## Why address reuse leaks",
+      "Public blockchains form a transaction graph: every coin points back to the coins that created it. Analysts cluster addresses into wallets using heuristics, and reusing one address puts every payment to it in the same cluster at once.",
+      "## Common-input ownership",
+      "A transaction that spends several coins needs a valid signature for each, so observers assume all its inputs belong to one owner. This common-input-ownership heuristic is the strongest clustering rule, and it's why combining coins from many addresses in one payment, or sweeping everything, links them.",
+      "## Change detection",
+      "Most payments create change: an output back to the sender. Analysts guess which output is change from clues such as round amounts, address type or how it is later spent, and so follow the sender's money forward.",
+      "## Deterministic key derivation",
+      "HD wallets derive each child key from a keyed hash (HMAC-SHA512) of a parent key and an index. The results look random to anyone without the parent key, so addresses from one phrase can't be linked just by looking at them, yet the owner can regenerate every one from the phrase.",
+      "## Addresses from keys",
+      "An address is a hash of a public key (or of a script), so a fresh key gives an unrelated-looking address at no cost. Encodings such as Base58Check and Bech32 add a checksum, so typing mistakes are caught before any money moves."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "secret-messages",
+    "title": "Secret messages",
+    "summary": "Send private notes to contacts, hidden inside a tiny Zcash payment.",
+    "body": {
+     "simple": [
+      "You can send a private note to a contact. Only they can read it, and nobody else can even tell the two of you were in touch.",
+      "Open Profile → Inbox to read and write messages. You can write to contacts who have shared a private Zcash address with you, usually through Link Up. Each message costs a tiny network fee, paid from your private (shielded) ZEC.",
+      "You choose whether they see it's from you, with Show who it's from. Switch it off and even they won't know who sent it. Private ZEC payments can carry a note too, with the same choice.",
+      "Messages can take a minute or two to arrive. They stay on the blockchain for good, encrypted so only the recipient can read them. Never put your recovery phrase in one, or a password you use for anything else."
+     ],
+     "detailed": [
+      "## Zcash's encrypted memos",
+      "Every shielded Zcash payment can carry a memo of up to 512 bytes, encrypted so that only the recipient can read it (its format is standardised in ZIP 302). A note to a contact travels this way, inside a shielded payment of a tiny amount, so it gets the same protection as private money.",
+      "Memos can only go to shielded or unified Zcash addresses. The network sees that a shielded transaction happened, but not the sender, the recipient, the amount or the text.",
+      "## Who sent it?",
+      "The Zcash protocol hides the sender even from the recipient. That's why showing who a message is from is your choice: with it off, a message reveals nothing about you to anyone, including the person reading it.",
+      "## Keep in mind",
+      "• Messages are permanent: they stay on the blockchain as encrypted data, and anyone who later obtains the recipient's keys could read them.\n• Sending needs spendable private ZEC.\n• Any Zcash wallet that displays memos can show the text."
+     ],
+     "complex": [
+      "## Encrypting to an address",
+      "Zcash encrypts each shielded output, memo included, with an integrated encryption scheme: the sender picks a fresh ephemeral key, performs elliptic-curve Diffie–Hellman with the recipient's public key, hashes the shared secret into a symmetric key, and encrypts with an authenticated cipher (ChaCha20-Poly1305). The ephemeral public key travels alongside the ciphertext.",
+      "Authenticated encryption gives confidentiality and integrity together: without the key, the ciphertext reveals nothing but its length, and any change to it is detected on decryption. Zcash memos are a fixed size, so even the length of the text stays hidden.",
+      "## Digital signatures",
+      "A digital signature proves who wrote a message without revealing their secret. The signer uses a private key to produce a signature over the message; anyone with the matching public key can verify it, and nobody without the private key can forge one. Ed25519 (Schnorr-style signatures on an Edwards curve) and ECDSA are widely used schemes.",
+      "`sign(private key, message) → signature\nverify(public key, message, signature) → true / false`",
+      "## Binding a signature to its context",
+      "A signature only vouches for what it covers. Careful designs include the intended recipient, a time and a purpose label (domain separation) in what is signed, so a valid signature can't be copied onto another message, replayed to another person or reused in a different protocol.",
+      "## Deniability versus authenticity",
+      "Because Zcash hides the sender, an unsigned message is deniable: the recipient can read it but can't prove who wrote it. A signed message trades that away for authenticity: whoever holds the signature can check who wrote it."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "monero",
+    "title": "Monero",
+    "summary": "A coin that is private by default, and why its balance can take a moment.",
+    "body": {
+     "simple": [
+      "Monero (XMR) is private by default. Nobody looking at its network can see your balance, who paid you or how much.",
+      "Because everything is hidden, your phone has to look through the network itself to find your money. That's why the Monero balance can take a while to catch up, especially the first time. The Monero page shows how far it has got.",
+      "A new payment appears a couple of minutes after it's sent and can be spent about 20 minutes later; that wait is a Monero network rule.",
+      "• Speed up scanning, on the Monero page, catches up faster but uses more data and battery.\n• While your Monero balance is zero, Skip the history lets you watch only for new payments. Anything sent to you before then won't show.",
+      "Each contact you share with gets their own Monero subaddress, and Receive → New address makes another whenever you like."
+     ],
+     "detailed": [
+      "## Private by design",
+      "Monero hides all three parts of a payment at the protocol level, from everyone:\n• the recipient, with one-time stealth addresses;\n• the sender, with ring signatures that mix each spent coin among decoys from the blockchain (16 members per ring under current rules);\n• the amount, with RingCT confidential transactions.",
+      "## Two keys",
+      "A Monero wallet has a private view key, which recognises incoming payments and reads their amounts, and a private spend key, which is needed to spend and to tell when your coins have been spent. Addresses are built from the two matching public keys; main addresses start with 4 and subaddresses with 8.",
+      "## Nodes",
+      "Because nothing is readable from outside, a wallet can't just look up a balance: it downloads blocks from a Monero node (anyone can run one, and many are public) and tests each output with its view key. A remote node never learns which outputs are yours, but it does see your IP address and when you broadcast a transaction.",
+      "## Timing",
+      "Monero adds a block roughly each 2 minutes, and new outputs can't be spent until 10 blocks have passed, about 20 minutes. View tags, added in the 2022 network upgrade, let wallets skip most other people's outputs after one quick check."
+     ],
+     "complex": [
+      "## Curve and keys",
+      "Monero works on the Ed25519 curve (a twisted Edwards form of Curve25519) with base point G and group order l. A wallet has a private view key a and a private spend key b, with public keys A = a·G and B = b·G.",
+      "## One-time addresses",
+      "To pay (A, B), the sender picks a random r, publishes R = r·G, and for output number i creates the one-time key:",
+      "`P = Hs(8·r·A ‖ i)·G + B`",
+      "The recipient computes 8·a·R, which equals 8·r·A, and checks whether P − Hs(8·a·R ‖ i)·G equals B, so the view key alone finds payments. Spending needs P's private key x = Hs(8·a·R ‖ i) + b, which requires the spend key. Hs hashes to a scalar; the factor 8 clears the curve's small cofactor.",
+      "## Ring signatures and key images",
+      "A spend is signed with a ring of outputs, the real one plus decoys, using CLSAG, a linkable ring signature: it proves the signer owns one member without saying which. Each spend also reveals a key image I = x·Hp(P), unique to the output; the network rejects any key image it has seen before, which stops double spends without revealing which output was spent. Decoys are drawn to mimic how old real spent outputs tend to be, following a gamma distribution.",
+      "## Hidden amounts",
+      "Amounts are Pedersen commitments C = y·G + v·H, where v is the amount and y a random blinding factor. Commitments add up, so the network checks that inputs equal outputs plus the fee without seeing any amount, while Bulletproofs+ range proofs show each amount is non-negative and in range, so nobody can create money out of negative values."
+     ]
+    },
+    "hasSkinsLimited": false
+   }
+  ]
+ },
+ {
+  "title": "XRP",
+  "tutorials": [
+   {
+    "id": "xrp-rlusd",
+    "title": "XRP and RLUSD",
+    "summary": "How an XRP wallet works, the 1 XRP that stays in it, and Ripple's digital dollar.",
+    "body": {
+     "simple": [
+      "XRP is the coin of the XRP Ledger. An XRP wallet is like a bank account that has to be opened before use: it opens when it first receives at least 1 XRP, and that 1 XRP stays in it as a deposit you can't spend.",
+      "RLUSD is a digital US dollar from Ripple, kept at the same address as your XRP. On the XRP page, flip the balance card to see it; Send, Receive and Convert follow the side that's showing. Switching RLUSD on sets aside another 0.2 XRP, and your first change into RLUSD switches it on for you.",
+      "Convert changes XRP into RLUSD, or back. Before you confirm, you see what you should get and the least you'll accept. If the price moves too far, the change simply doesn't happen, and only a tiny network fee is spent.",
+      "Paying an exchange? It may give you a destination tag: a number, like the reference on a bank transfer, that tells it the money is yours. Always include it when it's asked for.",
+      "Want the 1 XRP deposit back? At the Expert level, XRP tools → Delete my XRP wallet sends everything to another XRP account. The network keeps 0.2 XRP as its fee."
+     ],
+     "detailed": [
+      "## Accounts and reserves",
+      "An XRP Ledger account comes into existence when it receives at least the base reserve, 1 XRP today. Each object the account owns on the ledger (a trust line, an escrow, a signer list, an open offer) holds a further owner reserve, 0.2 XRP today. Reserves keep the shared ledger small and discourage spam. The network's validators can vote to change them, and what you can spend is your balance minus what's reserved.",
+      "## Tokens and trust lines",
+      "Besides XRP, the ledger carries tokens issued by companies. To hold one, an account opens a trust line to its issuer: a ledger entry saying it accepts that issuer's token. RLUSD is a US-dollar stablecoin issued by Ripple this way. Anyone you pay RLUSD to needs their own RLUSD trust line, and an empty trust line can be removed to free its reserve. The ledger gives regulated issuers freeze and clawback powers, so, like any regulated stablecoin, RLUSD can be frozen or taken back by its issuer.",
+      "## The built-in exchange",
+      "The XRP Ledger has its own decentralised exchange: an order book where anyone can place offers, alongside automated market maker (AMM) pools. One trade can draw on both at once, and it settles inside a single ledger with no middleman holding your funds. A trade can carry a limit and be marked “fill now or cancel”, so it either happens at that rate or better, or not at all. Pool trading fees are built into the price.",
+      "• Destination tags: a number attached to a payment so that a shared address, such as an exchange's, knows which customer it's for.",
+      "• Closing an account: an account can be deleted, sending its whole balance to another active account. The network destroys one owner reserve (0.2 XRP) as the fee, so most of the base reserve comes back. Token balances and open escrows must be settled first, and the address can be opened again later by a new payment of 1 XRP or more."
+     ],
+     "complex": [
+      "## Keys and addresses",
+      "Every XRP Ledger account is controlled by a key pair on an elliptic curve (secp256k1, the curve Bitcoin uses, or Ed25519). Signing a transaction with the private key produces a signature anyone can check with the public key, but nobody can forge without the private key. The address is a hash of the public key, written with a checksum so that typing mistakes are caught.",
+      "## Consensus and finality",
+      "There is no mining. Validators each propose the set of transactions they have seen and, over a few rounds of voting, converge on one set. When at least 80% of a validator's trusted list agree, the ledger closes, typically every 3 to 5 seconds. A validated ledger is final: unlike proof-of-work chains, where a block only grows safer as more blocks pile on top of it, there is nothing to reorganise.",
+      "## The account model",
+      "The ledger keeps balances per account rather than as unspent coins (the UTXO model used by Bitcoin). Each account has a sequence number that rises with every transaction it sends, so a signed transaction can never be replayed. Fees are tiny and are destroyed rather than paid to anyone, which slowly reduces the supply of XRP. When the network is busy, the minimum fee rises for a while: a simple fee market that makes flooding expensive.",
+      "## Automated market makers",
+      "An AMM pool holds two assets in amounts x and y and prices every trade so that their product stays constant. Paying in an amount a, with a trading fee f, returns:",
+      "`x · y = k        out = y − k / (x + a · (1 − f))`",
+      "The larger a trade is relative to the pool, the further the price moves against it (slippage). An order book instead matches separate offers at stated prices. A limit order sets the worst acceptable rate, so slippage beyond it simply means no trade."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "xrp-locks",
+    "title": "Locks and scheduled payments",
+    "summary": "Lock XRP until a date, pay someone later, or set up an allowance.",
+    "shownFrom": "business",
+    "body": {
+     "simple": [
+      "XRP tools → Savings lock, scheduled & timed payments lets you put XRP in a locked box on the XRP Ledger itself. You can choose:",
+      "• Savings lock: put your own XRP away until a date. Nobody can spend it before then, not even you.",
+      "• Claim by a deadline, or future gift: lock XRP for someone. With a deadline they must collect it in time, or it comes back to you. A future gift can be collected from a date you choose.",
+      "• Scheduled payment or allowance: pay someone once on a future day, or regularly, like pocket money. You can cancel any payment until it has been paid.",
+      "Savings locks, deadlines and gifts can't be undone, so check the amount, date and person before you confirm. Each open lock sets aside 0.2 XRP of your deposit until it's settled, and Kalda lets you know when someone locks XRP for you."
+     ],
+     "detailed": [
+      "## Escrow on the XRP Ledger",
+      "Escrow is built into the XRP Ledger. Creating one moves XRP out of your spendable balance into a ledger object that names a recipient and the rules for release. From then on the XRP is held by the network itself, not by any company. An escrow can have:",
+      "• A finish time: before it, nobody can release the escrow. After it, anyone may submit the release, but the XRP can only ever go to the named recipient.",
+      "• A cancel time (optional): after it, the escrow can no longer be released, and anyone may send the XRP back to its owner. Before it, not even the owner can take it back.",
+      "• A crypto-condition (optional): a lock that opens only when a matching secret is shown. It lets a payment be prepared in advance yet released only if its sender chooses to.",
+      "## Reserves and limits",
+      "Each open escrow holds one owner reserve (0.2 XRP today) on the sender's account until it's finished or cancelled, so an allowance of ten payments sets aside 2 XRP. The ledger judges every time by its own clock: the agreed close time of each validated ledger. Escrow of tokens is only possible when the token's issuer allows it, and RLUSD's issuer doesn't, so locks hold XRP.",
+      "A family or business wallet can lock XRP too. Like any spend from that wallet, the lock needs its co-signers' approval first."
+     ],
+     "complex": [
+      "## Time locks",
+      "A time lock is a rule in the ledger's state machine: a transaction that releases the funds is valid only if the ledger's agreed time is past a given point. Every validator applies the same rule to the same agreed timestamp, so no single party, the sender included, can override it.",
+      "## Hash locks and crypto-conditions",
+      "A cryptographic hash function such as SHA-256 maps any input to a fixed 256-bit fingerprint. It's easy to compute forwards, infeasible to reverse, and infeasible to make two inputs share a fingerprint. A hash lock publishes the fingerprint and opens for whoever presents an input (the preimage) that hashes to it:",
+      "`condition = SHA-256(preimage)        opens ⇔ SHA-256(presented) = condition`",
+      "The XRP Ledger follows the Crypto-Conditions standard written for the Interledger Protocol and supports its PREIMAGE-SHA-256 type. Presenting the preimage makes it public, so each hash lock opens only once.",
+      "## Hashed time-locked contracts",
+      "Combining a hash lock with a time-out gives a hashed time-locked contract (HTLC): either the secret is revealed before the deadline and the funds move forward, or the deadline passes and they go back. HTLCs make a payment all-or-nothing without trusting a middleman, which is why they underpin payment channels, the Lightning Network and atomic swaps between different blockchains.",
+      "## Reserves as a price for state",
+      "Every object in the ledger's current state must be kept by every validator. A refundable deposit per object puts a price on that storage, and returning the deposit when the object is removed rewards cleaning up."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "shared-wallets",
+    "title": "Family and business wallets",
+    "summary": "Separate XRP wallets that can need approvals from family members or partners.",
+    "shownFrom": "business",
+    "body": {
+     "simple": [
+      "A family or business wallet is a separate XRP wallet that a group shares, like a joint account. It comes from your same recovery phrase, so restoring your phrase brings it back. Create one in XRP tools, at the Expert level.",
+      "You choose who must agree before money leaves it: for example, two of three family members. One person asks to send, and the others approve on their own phones with their fingerprint or passcode.",
+      "A request can be shared as a message or QR code, swapped by Bluetooth when you're together, or posted for your co-signers to pick up in their own Kalda.",
+      "Co-signers only need Kalda with an XRP address; they don't need any XRP. The shared wallet can also hold and convert RLUSD, lock XRP and make scheduled payments, each with the group's approval."
+     ],
+     "detailed": [
+      "## Multi-signing",
+      "The XRP Ledger lets an account attach a signer list: up to 32 other accounts, each with a weight, plus a quorum, the total weight needed. A transaction from that account is valid only if it carries signatures whose weights add up to the quorum. Signers don't need funded accounts of their own.",
+      "An account can also switch off its own key, so the signer list becomes the only way to spend. Then no single phone, not even the one that created the wallet, can move the funds alone. Changing the signer list, or switching the key back on, is itself a transaction that needs the quorum.",
+      "## Approving",
+      "Each co-signer signs the very same transaction, and the signatures are combined. A signature covers every field, so an approval for one payment can't be reused for another, and nobody can change the amount or recipient once others have signed. Each transaction also has an expiry and a sequence number, so a request stops being valid once it expires or the wallet makes a different transaction first.",
+      "Requests can travel any way that's convenient: as text, as a QR code, over Bluetooth Low Energy between nearby phones, or through the XRP Ledger itself. Whatever the route, the ledger accepts the transaction only with enough valid signatures. Anything posted on the ledger is public and permanent.",
+      "## Costs",
+      "Each extra signature adds a little to the network fee: a multi-signed transaction pays the base fee once for each signer plus one, still a fraction of a cent. The signer list holds one owner reserve (0.2 XRP) on top of the 1 XRP base reserve. Closing the wallet works like closing any XRP account: everything goes to another active account, and the network keeps 0.2 XRP."
+     ],
+     "complex": [
+      "## Digital signatures",
+      "A digital signature proves that the holder of a private key approved one exact message. The signer combines a hash of the message with their private key; anyone with the public key can check the result but can't produce a new valid signature. Change a single bit of the message and the signature no longer verifies.",
+      "## Weighted thresholds",
+      "A k-of-n scheme needs any k of n parties to agree. Weighted multi-signing generalises it: each signer i has a weight wᵢ, and a group S of signers is enough when:",
+      "`Σ wᵢ  (i ∈ S)  ≥  quorum`",
+      "With weights 2, 1 and 1 and a quorum of 2, the first person alone, or the other two together, can approve. Choosing weights and quorum trades safety (how many people would have to collude to steal) against availability (how many must be reachable to spend).",
+      "## Multi-signing versus secret sharing",
+      "Multi-signing keeps every key separate and lets the network count the signatures, so who approved is visible on the ledger. Threshold signatures and Shamir secret sharing instead split one key, so the result looks like a single ordinary signature. Shamir hides a secret as the constant term of a random polynomial over a finite field: any k points on it recover the secret by interpolation, while k − 1 points reveal nothing.",
+      "## Replay protection",
+      "Each XRP Ledger account has a sequence number. A transaction is valid only with the account's next number, and only until its expiry ledger, so a signed transaction can run at most once, and a pending approval goes stale as soon as the account moves on."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "wallet-skins",
+    "title": "Wallet skins",
+    "summary": "Change how your wallet looks, with free designs or collectible skins.",
+    "body": {
+     "simple": [
+      "A skin changes how your Wallet page looks: its colours, background and moving patterns, and some draw an endless fractal zoom. Open Profile → Wallet Skins and tap one to wear it.",
+      "The built-in designs are free. Collectible skins are one-of-a-kind items on the XRP Ledger: you own them, can give one to a contact, or can destroy one for good.",
+      "Giving a skin is an offer your contact accepts. It stays yours until they do, and you can cancel it until then. While it waits, 0.2 XRP of your deposit is set aside.",
+      "Gift protection stops strangers sending you collectibles, a common way to push scams. With it on, tap “Get ready to receive” before a contact sends you one.",
+      "Destroying a skin is permanent. Nobody can bring it back."
+     ],
+     "detailed": [
+      "## NFTs on the XRP Ledger",
+      "Collectible skins are NFTs (non-fungible tokens), a standard built into the XRP Ledger. Each NFT has a unique ID, an issuer that never changes, and a small data field set when it's created. Ownership is recorded by the ledger itself, so a skin is yours in the same way your XRP is. The holder can also burn an NFT, removing it for good.",
+      "Anyone can create an NFT that looks like anything, so its issuer is what shows where it came from. Collectibles that aren't genuine Kalda skins appear under My other collectibles (in Wallet Skins) as plain text.",
+      "## Offers, gifts and royalties",
+      "NFTs change hands through offers on the ledger. A sell offer can name one person and a price of zero, making it a gift only they can accept; until they do, the owner can cancel it. Nothing can be pushed into a wallet without the receiver accepting. An issuer can set a transfer fee when creating an NFT, a royalty paid on every paid resale: Kalda's skins carry 5%, and free gifts pay nothing.",
+      "Each open offer holds one owner reserve (0.2 XRP) on the account that made it. NFTs you hold are kept in pages of up to 32, each page holding one owner reserve.",
+      "## Gift protection",
+      "An account can switch on a ledger setting that blocks NFT offers made out to it, while leaving what it already holds untouched. Turning it on or off is an ordinary account setting that costs a tiny network fee. “Get ready to receive” lifts it briefly so a contact's gift can arrive."
+     ],
+     "complex": [
+      "## Non-fungible tokens",
+      "Units of a fungible asset are interchangeable: one XRP is as good as another. A non-fungible token is a ledger entry with its own identity. On the XRP Ledger an NFT's 256-bit ID packs its flags, transfer fee, issuer, a category number and a serial number, so two tokens can never collide and the issuer can always be read from the ID itself.",
+      "## On-chain and off-chain data",
+      "Many NFTs hold only a link to an image stored elsewhere, which can vanish or change. A token that carries its own description is self-contained: anyone with the ledger data can recreate it exactly. The cost is size: an XRP Ledger NFT's data field holds at most 256 bytes, so on-chain art must be described as compact rules for drawing rather than as pixels.",
+      "## Generative art",
+      "Generative art is drawn by a program from a few parameters and a seed. A pseudo-random number generator turns the seed into a long, repeatable sequence of numbers, so the same seed always produces the same picture on every device, while different seeds give endless variety.",
+      "## Fractals",
+      "A fractal such as the Mandelbrot set comes from repeating a simple formula on complex numbers and asking whether the result stays bounded:",
+      "`z₀ = 0,   zₙ₊₁ = zₙ² + c        c is in the set if |zₙ| never exceeds 2`",
+      "Colouring each point by how quickly it escapes reveals detail at every scale along the boundary, so you can keep zooming. In practice the limit is number precision: 64-bit floating point carries about 16 significant digits, so detail breaks up after roughly a trillion-fold (10¹²) zoom."
+     ]
+    },
+    "hasSkinsLimited": true
+   }
+  ]
+ },
+ {
+  "title": "Exchanges",
+  "tutorials": [
+   {
+    "id": "exchange-thorchain",
+    "title": "THORChain",
+    "summary": "Swaps real coins between blockchains, with no wrapped tokens anywhere.",
+    "body": {
+     "simple": [
+      "THORChain is a network that lets you trade a coin on one blockchain for a coin on another, without an exchange account and without anyone holding your money for you.",
+      "It works because the network itself owns pools of real coins on each blockchain it supports. You send it Bitcoin; it takes the Bitcoin into its Bitcoin pool and pays you Ethereum out of its Ethereum pool. Nothing is lent, and no IOU is involved — what arrives is the real coin on the real chain.",
+      "About a hundred independent operators run it. Each one has to lock up a large amount of the network's own coin to take part, which they lose if they misbehave, and no single one of them can move the pools' money alone.",
+      "## What it means for you",
+      "Swaps through it take a few minutes, longer from Bitcoin-family chains, because the network waits until it is sure your deposit really happened.",
+      "The bigger your trade is compared with the pool you're trading against, the worse the price you get. Large swaps of a thinly traded coin cost noticeably more.",
+      "The operators can pause a chain, for example during an upgrade or while something looks wrong. A swap isn't offered while its chain is paused, and a swap that can't be finished is sent back to you, minus fees."
+     ],
+     "detailed": [
+      "## Continuous liquidity pools",
+      "Every supported asset has a pool holding that asset and the network's own settlement asset, RUNE. There is no Bitcoin-to-Ethereum pool: a swap between them is two trades through RUNE, done in one operation. Pairing everything against one asset means n pools instead of n(n−1)/2, which is what makes supporting many chains practical.",
+      "## How a deposit becomes a swap",
+      "You send your coin to an address the network controls on that chain, with a short instruction attached saying what you want and where to send it. The network's validators each watch the external chains and vote on what they saw; once enough of them agree the deposit happened, the swap executes and the payout is signed and broadcast on the destination chain.",
+      "## Who controls the money",
+      "The addresses holding the pools are controlled jointly by the node operators, so that a large enough subset must cooperate to sign anything and no single operator ever holds a whole key. The set is rotated regularly, which limits what a group that goes bad can do and removes operators who stop behaving.",
+      "## Economic security",
+      "Operators bond the network's own asset to take part, and the bond is slashable. The design holds as long as the total bonded is worth meaningfully more than the pooled assets it secures — if that stopped being true, attacking the network would be cheaper than running it honestly, which is why the protocol actively steers the ratio between bonded and pooled value.",
+      "## What a swap costs",
+      "• The ordinary fee for sending your coin on its own chain.",
+      "• A liquidity fee that grows with your trade's size relative to the pool — not a flat percentage.",
+      "• An outbound fee covering the destination chain's cost of paying you.",
+      "## Native assets, and why that matters",
+      "There are no wrapped tokens and no bridge receipts: the asset you receive is the real one on its own chain. That removes a whole class of risk, since there is no issuer whose solvency you depend on. The cost is that the network has to hold real coins and watch real chains itself, which is where its complexity lives."
+     ],
+     "complex": [
+      "## The slip-based fee",
+      "Rather than a fixed percentage, the fee is a function of the trade's size relative to depth. For a pool with asset depth X and rune depth Y, an input x returns",
+      "`y = (x · X · Y) / (x + X)²`",
+      "which is the constant-product result with the slip itself charged as the fee. The share taken grows as x/X grows, so a trade at 1% of pool depth pays about 1%, while one at 50% pays far more. Large trades are therefore self-limiting without needing a cap, and splitting a trade over time is a rational response.",
+      "## Threshold signatures over external chains",
+      "The vaults are controlled by a threshold signature scheme: a set of n nodes can produce a valid signature for the address if at least t of them participate, and the full private key exists at no point and in no place. Because the signature is an ordinary one for the destination chain, the chain itself needs no knowledge of the network. Membership is rotated on a schedule — a churn — which bounds the exposure of any one committee and requires a key resharing protocol rather than a key handover.",
+      "## Consensus about other chains",
+      "The hard problem is not signing but observation: the network must agree on facts about blockchains that cannot talk to it. Each validator reports what it has seen at a given external height, and an observation is acted on only once a supermajority agrees. This is why finality on the source chain gates everything: acting on a deposit that is later reorganised away would create an unbacked payout.",
+      "## The bond-to-pool invariant",
+      "If bonded value falls below pooled value, a colluding subset of signers can profitably steal the pools. The protocol responds by moving rewards between bonders and liquidity providers to pull the ratio back, which makes the yield on each side a control signal rather than a fixed rate. It is an unusual property: the network's economic parameters are not set by governance but driven toward a safety condition.",
+      "## Failure modes and refunds",
+      "Three situations are handled by protocol rule rather than discretion: a deposit whose instruction cannot be parsed, a swap whose output would fall below the minimum the sender specified, and a destination chain that is unavailable. All three resolve to a refund on the source chain, less the cost of making it — which is why a failed swap is not free, and why a dust-sized deposit can be consumed entirely by the cost of returning it."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "exchange-near-intents",
+    "title": "NEAR Intents",
+    "summary": "You say what you want; competing market makers race to fill it.",
+    "body": {
+     "simple": [
+      "NEAR Intents takes a different approach from a pool-based exchange. Instead of trading against a pool at whatever price the formula gives, you state what you want — this coin, for that coin, at least this much — and professional market makers compete to be the one who fills it.",
+      "Because they are competing, the price you get is the best one any of them will offer at that moment, rather than whatever a single pool happens to be at.",
+      "## What it means for you",
+      "It reaches coins a pool-based network may not, because a market maker only needs to be willing to trade a coin, not to have a pool of it sitting there.",
+      "Swaps through it are often quick, since filling is a decision rather than a formula, and the coin you want can be paid out from stock a market maker already holds.",
+      "You are quoted a specific amount before you agree, and the quote expires — prices move, and nobody will hold an offer open indefinitely.",
+      "If nobody fills it, your coin comes back to you. You are not left waiting on a trade that silently never happened."
+     ],
+     "detailed": [
+      "## Intents rather than instructions",
+      "An ordinary swap says how to trade: this pool, this path, this slippage. An intent says only what the outcome must be, and leaves how to achieve it to whoever takes it on. The people who do that — market makers, or solvers — compete on the outcome, so the path becomes their problem rather than yours.",
+      "## How a swap happens",
+      "You are given a quote and an address to send your coin to. Once your deposit is seen, the market maker who quoted it is responsible for paying out the coin you asked for, to the address you named — which may be your own wallet or someone else's. The settlement of who owes what happens on the NEAR blockchain; the coins themselves live on their own chains and are carried across by bridges.",
+      "## Where the risk sits",
+      "This design moves the trust question. A pool-based network holds your coin in pools secured by its own operators. Here, the assets being traded are moved across chains by bridges, and a bridge is a thing with its own security assumptions — usually a set of validators or a contract — which is not the same as holding native coins.",
+      "## What a swap costs",
+      "• The ordinary fee for sending your coin on its own chain.",
+      "• The spread the market maker takes, which is inside the quote rather than listed separately.",
+      "• The cost of paying you out on the destination chain.",
+      "## Why a quote expires",
+      "A market maker quoting a firm price is taking on price risk for as long as the quote stands. The shorter the window, the tighter the price they can afford to offer. An expired quote is not a failure; it is the mechanism that makes a firm price possible at all."
+     ],
+     "complex": [
+      "## Competition versus a formula",
+      "An automated market maker prices by a public rule, so its price is predictable and its slippage is a function of depth. A competitive request-for-quote prices by auction, so the price is whatever the most aggressive participant will offer, bounded below by their own cost of hedging. The two have different failure modes: a pool is always available but can be drained or priced badly; an auction gives better prices when there is competition and nothing at all when there isn't.",
+      "## Settlement and the double-spend problem across chains",
+      "The difficulty in any cross-chain fill is that the two legs happen on systems that cannot see each other, so one party is briefly exposed. Designs resolve this either by escrowing one leg under a condition the other leg reveals, or by having a settlement layer hold a record of obligations and net them. The second approach lets a market maker fill many trades against a balance rather than pre-funding each one, at the cost of requiring that settlement layer to be trusted for the accounting.",
+      "## Bridges as the real security boundary",
+      "Where native assets are not held directly, the asset on the far side is a representation, and its soundness is exactly the soundness of whoever can mint it. The practical consequence is that the risk of such a swap is not the exchange's design but the weakest bridge in the path — historically the most frequently exploited component in this entire category of system. Evaluating one means asking who can issue the representation and what would have to fail for them to do so wrongly.",
+      "## Economic bounds on the price you receive",
+      "A solver's quote is their expected exit price minus their cost of hedging, inventory and settlement, minus a margin. With several solvers quoting, competition pushes toward the best of those costs rather than the average, which is why such systems often beat a pool for liquid pairs and lose to one for obscure pairs where only a single participant is willing to quote at all.",
+      "## Verifying the fill",
+      "Because the path is the solver's choice, a user cannot check the route and must instead check the outcome: that the asset identifier quoted is the asset identifier delivered, and that the amount meets the minimum agreed. An identifier that is echoed back in a different notation than it was requested in is a case worth handling deliberately — the check that matters is whether it denotes the same asset, not whether the strings match."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "exchange-uniswap",
+    "title": "Uniswap",
+    "summary": "Trades Ethereum and its tokens on Ethereum itself, in one transaction.",
+    "body": {
+     "simple": [
+      "Uniswap trades Ethereum and the tokens built on it — and only those. It isn't a cross-chain network: everything happens on Ethereum, which is what makes it different from the others.",
+      "It is a program running on Ethereum rather than a company. Anybody can put two coins into a pool and earn a share of the fees from people trading against it, and anybody can trade against it.",
+      "## What it means for you",
+      "A swap through it is a single Ethereum transaction. There is no waiting for a deposit to be noticed by anyone, so it either works within a block or two, or it fails and you keep your coins — minus the Ethereum fee for trying.",
+      "Because it all happens in one transaction, the amount you receive is guaranteed before it goes through. If the price moved enough that you'd get less than you agreed to, the transaction simply doesn't happen.",
+      "What it costs depends mostly on how busy Ethereum is at that moment, not on the size of your trade. That makes it good value for larger swaps and poor value for very small ones.",
+      "The first time you trade a particular token, there's an extra step to give permission to move it. It costs a small Ethereum fee of its own."
+     ],
+     "detailed": [
+      "## An exchange that is a program",
+      "There is no operator and no deposit. A pool is a contract holding two tokens; a trade is a call to it that takes some of one and leaves some of the other, priced by a formula that depends only on what the pool currently holds. Anyone can create a pool for any pair, so the catalogue is permissionless and the quality varies enormously.",
+      "## Atomic settlement",
+      "The whole swap — possibly across several pools — succeeds or fails as a unit, inside one transaction. This is the central advantage over any cross-chain design: there is no window in which you hold a half-finished trade, and the minimum output you specify is enforced by the contract itself rather than promised.",
+      "## Fee tiers and depth",
+      "The same pair can have several pools with different fee levels. A stable pair can be served well by a very low fee, while a volatile pair needs a higher one to pay the people providing liquidity for the risk they take. A router picks a path across pools; the headline rate alone doesn't say which is cheapest, because a lower fee on a thin pool can cost more in price impact than a higher fee on a deep one.",
+      "## Approvals",
+      "Moving an existing token requires giving a contract permission to do so first, which is a separate transaction. It is worth knowing this is an allowance rather than a one-off: it stays until changed, which is both a convenience and something worth keeping an eye on.",
+      "## What a swap costs",
+      "• Ethereum's own fee for the transaction, which dominates for small trades.",
+      "• The pool's fee, a fixed share of the amount traded.",
+      "• Price impact, which depends on your size against the pool's depth.",
+      "• A separate Ethereum fee for an approval, when one is needed."
+     ],
+     "complex": [
+      "## Constant product and its descendants",
+      "The original rule keeps the product of reserves fixed across a trade:",
+      "`x · y = k`",
+      "An input Δx returns Δy = y·Δx/(x+Δx) before fees. The marginal price is y/x and the realised price is always worse, with the gap growing as Δx/x — this is price impact, and it is a property of the formula, not a charge by anyone. Liquidity under this rule is spread over every price from zero to infinity, most of which will never trade, so capital efficiency is poor.",
+      "## Concentrated liquidity",
+      "Later designs let a provider choose a price range and supply liquidity only inside it, behaving within that range like a constant-product pool holding much larger virtual reserves. Capital efficiency improves by orders of magnitude for a pair that stays in range, and the provider is left holding only one of the two assets when it leaves. Aggregate depth therefore becomes a function of price — a pool can be very deep at the current price and thin a few percent away, which is invisible in any single quoted rate.",
+      "## Impermanent loss as a cost of providing",
+      "A provider's holding is rebalanced continuously against the market by the traders themselves, so it ends up with more of whichever asset fell. Against simply holding the two assets, the shortfall for a constant-product pool at a price ratio r is",
+      "`1 − 2·√r / (1 + r)`",
+      "which is zero when the price returns and grows either side of it. Fee income has to exceed this for providing to be worthwhile, which is why fee tiers track volatility.",
+      "## Ordering and extractable value",
+      "Because trades settle in a public ordered sequence, whoever decides the order can profit from knowing a trade before it executes: placing one in front and one behind it captures the price it moves. The minimum-output bound is the user's defence, and it converts a worse price into a failed transaction rather than preventing the extraction. Private transaction routing avoids the public queue, at the cost of relying on whoever carries it to include it at all — a dropped transaction is the characteristic failure of that approach, and the reason it must be detected rather than waited on indefinitely.",
+      "## Path selection",
+      "Finding the best execution is an optimisation over paths and splits, not a lookup: a large trade may be best served split across several pools and several hops, since impact is superlinear in size within each. The comparison that matters is always the output after all fees and impact, which is why two routers quoting the same pair can honestly differ."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "exchange-multi-step",
+    "title": "Swaps in more than one step",
+    "summary": "Why a swap through other coins isn't guaranteed, and how padding helps.",
+    "body": {
+     "simple": [
+      "Some coins can't be swapped straight into each other. Then the swap goes through a coin in between: for example USDC into DOGE, then DOGE into BNB.",
+      "Each step is its own trade, made a few minutes after the one before. Prices keep moving in between, so the last step can cost more than it did when you checked.",
+      "If it costs too much, that step stops. Nothing is lost: the coin in between stays in your wallet, and you can finish the swap later.",
+      "## Padding",
+      "Padding gives the later steps room for the price to move. Each step of padding adds 0.5%.",
+      "• Paying someone a set amount, padding buys a little more of the coin in between. They still get exactly what you typed, and what isn't needed stays in your wallet.",
+      "• Swapping for yourself, padding lets the later steps accept a slightly worse price instead of stopping.",
+      "More padding makes the swap more likely to finish. It can't make it certain: a big enough price move, or a network that pauses, can still stop a step."
+     ],
+     "detailed": [
+      "## Why there's no direct swap",
+      "Each exchange network only trades the coins it holds pools or market makers for. When no single network trades both coins, the swap goes through a coin that two of them share, and each step is a separate trade on its own network.",
+      "## Why a later step can stop",
+      "A step only starts once the coin from the step before has arrived, which can take minutes. The price for the next step is fixed only when that step is sent, and the exchange then pays out only if it can still meet the least the step was allowed to pay. If the market moved past that, the exchange refunds the step instead of filling it at a worse price.",
+      "## What padding changes",
+      "Padding widens that allowance. When the last step pays a set amount to someone, it buys more of the coin in between up front, so the last step can still afford that amount after a move. When it doesn't, it lowers the least each later step will accept.",
+      "Neither changes what the exchanges do. They are still independent trades that can each fail, which is why a multi-step swap is never guaranteed."
+     ],
+     "complex": [
+      "## Sequential execution risk",
+      "A route of n trades executed one after another is exposed to price movement over the whole time between the first quote and the last fill. With each step's price roughly a random walk, the spread of outcomes grows with the square root of that time, so a route whose steps take minutes each carries noticeably more risk than one trade.",
+      "## Slippage limits as a guarantee",
+      "Each step carries a minimum output. The exchange fills the step only if it can deliver at least that, and refunds the input otherwise. That makes every step all-or-nothing on its own, but it makes the route as a whole conditional: the probability that it finishes is the product of each step's probability of clearing its limit.",
+      "## The effect of padding",
+      "Loosening a step's limit by a fraction p raises the chance that it clears. Overbuying the intermediate asset by p, when the final output is fixed, does the same from the other side: the final step needs less than it holds. Either way the gain shows up in the tail, against moves larger than the limit would otherwise allow, and it never reaches certainty, because the size of a move is unbounded."
+     ]
+    },
+    "hasSkinsLimited": false
+   }
+  ]
+ },
+ {
+  "title": "More",
+  "tutorials": [
+   {
+    "id": "secret-sharing",
+    "title": "Recovery shares from friends and family",
+    "summary": "Split your backup among people you trust, so a few of them together can bring your wallet back.",
+    "body": {
+     "simple": [
+      "Your recovery phrase is the key to your whole wallet. If you lose it, your money is gone. Secret sharing gives you a safety net.",
+      "You can cut your phrase into pieces, called shares, and give one to each person you trust. It's like a treasure map torn into pieces: one piece on its own shows nothing.",
+      "You choose how many pieces are needed. For example, 7 people, and any 4 of them together can bring your wallet back if you lose it, or for your family if you pass away.",
+      "Set it up in Profile → Backup & security → Secret sharing, and send each share as a private Zcash message to a contact, by email with a password, or as words in a letter. To use shares later, choose Recover with shares on Kalda's welcome screen.",
+      "Choose people who won't all get together behind your back: enough of them together could open your wallet. If you think too many shares are no longer safe, move your money to a new wallet."
+     ],
+     "detailed": [
+      "Secret sharing is built on a well-known idea from cryptography, Shamir's secret sharing, published by Adi Shamir in 1979. Kalda's shares follow SLIP-39, a public, open standard that turns Shamir shares into lists of words.",
+      "• Threshold: you pick N people and a number T. Any T shares rebuild the recovery phrase; T − 1 or fewer reveal nothing about it, not even a hint.",
+      "• Words with error detection: each share is written with a fixed word list, so it can be copied by hand, read aloud or kept on paper, and carries a checksum, so a mistyped word is caught instead of producing the wrong wallet.",
+      "• Sets stay together: every share in a set carries the same identifier, so shares from two different sets can't be mixed by accident.",
+      "## Getting shares to people safely",
+      "A private Zcash message is encrypted by the Zcash network itself, so only the recipient can read it. Email and chat apps aren't private, so a share sent that way travels locked with a password; give the password another way, such as in person, by phone or in your will. Words in a letter need nothing more.",
+      "No scheme can take shares back once they are given out: making a new set doesn't stop the old one working. And if more than N − T people lose their shares, there aren't enough left to recover. The only way to retire old shares is to move your money to a new wallet."
+     ],
+     "complex": [
+      "Shamir's secret sharing rests on a simple fact about polynomials: two points fix a straight line, three points fix a parabola, and in general T points fix exactly one polynomial of degree T − 1.",
+      "## Splitting",
+      "To share a secret s with threshold T, choose a random polynomial of degree T − 1 whose value at zero is the secret. Each person receives one point on that curve, taken at a different, non-zero x.",
+      "`f(x) = s + a₁x + a₂x² + … + a₍T−1₎x^(T−1)     share i = (xᵢ, f(xᵢ))`",
+      "## Rebuilding",
+      "Any T shares determine the polynomial uniquely, and Lagrange interpolation gives its value at zero, which is the secret:",
+      "`s = f(0) = Σᵢ yᵢ · Πⱼ≠ᵢ xⱼ / (xⱼ − xᵢ)`",
+      "## Why fewer shares reveal nothing",
+      "The arithmetic is done in a finite field (for byte-sized secrets, typically a field of 256 elements), not with ordinary numbers. With only T − 1 points, every possible secret is matched by exactly one polynomial through those points, so each value is equally likely. This is information-theoretic security: it holds no matter how much computing power an attacker has.",
+      "In practice, long secrets are split byte by byte with fresh random coefficients each time. Plain Shamir can't tell a wrong share from a right one, so practical schemes add a checksum to each share and a digest of the secret to detect mistakes. And the scheme protects the secret only until T holders combine their shares, so the threshold is a trade-off: high enough to resist collusion, low enough to survive lost shares."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "levels-and-settings",
+    "title": "Your account type",
+    "summary": "Choose how Kalda is organised, which coins appear on your wallet, and your language.",
+    "body": {
+     "simple": [
+      "When you first open Kalda, it asks for your account type: Personal, Business, Investment, Trading or Developer. Pick one. Each organises Kalda around what you do: the features that go with it are to hand, and the rest stay out of your way.",
+      "Switching type changes nothing under the hood: your coins, balances and addresses stay exactly as they are; only the organisation and layout change. Money sent to you always arrives, whatever you chose. You can change it any time on your Profile.",
+      "Profile → Coins on my wallet lets you choose which coins appear on your wallet screen. Hiding a coin never touches the money in it.",
+      "The app's language is in Profile → Settings."
+     ],
+     "detailed": [
+      "What each type brings to the front:",
+      "• Personal account: a short guide the first time you open each main page, tips on the trickier actions and, on its own, a handful of popular coins (plus any coin you already hold).",
+      "• Business account: XRP tools, such as shared wallets with co-signers, locks and scheduled payments.",
+      "• Developer account: everything, plus Developer Settings and the developer docs.",
+      "• Investment account: everything the Trading account shows, plus staking on each coin's page where the coin offers it, and interest on USDC and USDT through lending. Each one lists its risks before anything is sent.",
+      "• Trading account: Kalda first explains honestly that most people who trade often lose money, and that a centralised exchange usually costs less for frequent trading. After that, Swap shows a price check against the wider market, and when a swap goes through another coin on the way, the path it takes.",
+      "Every type is private: payments to you go to private addresses, and Kalda spends private money on its own. Encrypted messages are for everyone, whatever your type. If something arrives that your type doesn't show yet, Kalda tells you what it is and offers to turn it on, so nothing you own stays hidden.",
+      "## Why it works this way",
+      "Grouping features by what people do, rather than by skill, makes them easier to find: you pick the tasks you care about, and everything else stays out of the way."
+     ],
+     "complex": [
+      "## Progressive disclosure",
+      "Progressive disclosure is a long-standing principle of interface design: present the few options most people need, and defer advanced ones until they're asked for. It reduces cognitive load, the mental effort needed to understand a screen, and with it the chance of mistakes.",
+      "Research on personalised interfaces finds that letting people choose what they see (an adaptable interface) works better than an app that rearranges itself, and that grouping features by task works better than grouping them by expertise.",
+      "## Self-custody",
+      "In a self-custody wallet, whoever holds the private keys controls the funds. There's no bank to call, no password reset and no chargeback: a confirmed blockchain transaction is final, and a lost recovery phrase can't be recovered by anyone else.",
+      "## Separating view from behaviour",
+      "A good layered design changes presentation only. The same keys, addresses and balances exist whatever is ticked, so changing your choice never moves money or changes what other people can send you; it only changes how much of it you see."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "notifications",
+    "title": "Notifications",
+    "summary": "What Kalda tells you about, made on your own phone.",
+    "body": {
+     "simple": [
+      "Kalda can let you know on your phone when something happens, such as:",
+      "• A swap finishing or being refunded, or a move between your private and public Zcash balances finishing.",
+      "• A new secret message (who it's from, never what it says), or a wallet skin someone has sent you.",
+      "• XRP locked for you, arriving, going out on schedule or coming back.",
+      "These notifications are made on your phone. No company sends them, and Kalda has no server of its own that knows about you. Kalda asks for permission the first time one would be useful, and you can turn them off in your phone's settings."
+     ],
+     "detailed": [
+      "Most apps rely on a push service: the app maker's server sends a message to your phone through Apple or Google. Kalda's notifications are local instead: your phone looks at public networks directly and shows the notification itself. That works because:",
+      "• Public blockchains can be read by anyone, so your phone can see when a payment has arrived or a transaction has settled without asking anyone's permission.",
+      "• Cross-chain swap networks publish the status of every swap, so the outcome of a swap (paid out or refunded) can be looked up openly.",
+      "• The XRP Ledger keeps escrows (locks) as public records, showing who will receive what and when.",
+      "• Zcash shielded messages are encrypted to the recipient, so only your own wallet can discover and read them.",
+      "## What to expect",
+      "Your phone's operating system decides when apps may run in the background, to save battery, so a notification can arrive a little after the event itself. Private Zcash messages are found while Kalda is open, because only your wallet can decrypt them."
+     ],
+     "complex": [
+      "## Push and pull",
+      "There are two ways to learn about events. In a push model, a server watches for events and sends them to a device. In a pull model, the device asks the source itself. Push saves the device work; pull avoids relying on, and revealing yourself to, a middleman.",
+      "A push notification needs a device token registered with the platform's notification service and with the app's server. That pairing links one device to its activity, so whoever runs the server learns what the user cares about and when. A pull model keeps that knowledge on the device.",
+      "## Reading public state",
+      "Blockchains are replicated public ledgers. Any client can ask a node for an account's balance, a transaction's status or a ledger object, much as anyone can read a public notice board. Light clients go further and check what they're told against block headers instead of trusting the server.",
+      "## Finding private payments",
+      "In shielded systems such as Zcash, outputs are encrypted to the recipient's key. A wallet discovers its own payments by trial decryption: it tries to decrypt each new output with its viewing key, and only outputs meant for it succeed. Nobody else can tell which outputs belong to whom, which is why this scanning has to happen on the recipient's own device.",
+      "## Settled, not just sent",
+      "A transaction is final once the network's consensus can no longer reverse it. In proof-of-work chains finality is probabilistic and grows with each confirmation; in chains such as the XRP Ledger, a validated ledger is final within seconds. A trustworthy \"complete\" notification waits for that point."
+     ]
+    },
+    "hasSkinsLimited": true
+   },
+   {
+    "id": "network-fees",
+    "title": "Network fees",
+    "summary": "The small charge each network takes to carry a payment.",
+    "body": {
+     "simple": [
+      "Every time you send crypto, the network that carries it charges a small fee. It's like postage on a letter: you pay it to get your payment delivered.",
+      "The network fee goes to the network, not to Kalda. You see it before you send, and it's taken from your balance.",
+      "Some coins need a little to stay behind. For example, an XRP wallet must always keep a small amount. If you tap the most you can send, room is left for the fee and anything that has to stay.",
+      "Sending a token such as USDC on Ethereum needs a little ETH for its fee. A swap also has the swap network's own fee, shown on its own line on the Swap screen."
+     ],
+     "detailed": [
+      "Each network sets its own fee rules, and they're all public:",
+      "• Bitcoin, Litecoin, Dogecoin and Bitcoin Cash: the fee depends on the payment's size in bytes, not on the amount. A payment that gathers many small coins is bigger, so it costs more. When the network is busy, fees rise.",
+      "• Ethereum, BNB Chain and Avalanche: the fee is called gas. Ethereum's fee market (EIP-1559) has a base fee that rises and falls with demand, plus a small tip. Tokens such as USDC and USDT pay their gas in ETH.",
+      "• XRP Ledger: a tiny fee, plus a reserve that must stay in every account, and a little more for each thing the account holds on the ledger, such as a trust line or an escrow.",
+      "• Zcash: fees follow ZIP 317, based on how many pieces a payment has, not on the amount.",
+      "• Solana: a small fixed fee per signature. An account must be emptied completely or keep a small minimum balance.",
+      "• TRON: often free, paid from daily bandwidth; sending to a brand-new address costs a little extra to create it.",
+      "• Cardano, Cosmos and RUNE: Cardano charges by transaction size and asks every output to carry a minimum of ADA; Cosmos and RUNE charge a fee set by their networks."
+     ],
+     "complex": [
+      "## Why fees exist",
+      "Block space is scarce: each block can hold only so much. Fees ration that space and make spam expensive. They're paid to the miners or validators who include transactions, or in some designs destroyed (burned), which makes the remaining coins slightly scarcer. Moving a million costs the network the same as moving one, since the work is checking signatures and storing data, not counting value; that's why fees follow size or computation, unlike card fees, which follow the amount.",
+      "## UTXO and account models",
+      "Bitcoin-style chains use unspent transaction outputs (UTXOs): coins are discrete pieces, and a payment spends whole pieces as inputs and creates new outputs, including change back to the sender. Size, and so the fee, grows with the number of inputs and outputs. Account-based chains such as Ethereum keep a balance per account, and fees depend on the computation a transaction needs.",
+      "`fee = fee rate × transaction size        size ≈ overhead + per-input + per-output`",
+      "## Fee markets",
+      "When demand exceeds space, users compete by offering higher fees, like an auction. Ethereum's EIP-1559 makes this more predictable: a base fee adjusts automatically from block to block depending on how full the last block was, and is burned, while a smaller priority fee goes to the validator.",
+      "`fee paid = gas used × (base fee + priority fee)     base fee moves by at most 12.5% per block`",
+      "## Reserves and dust",
+      "Some ledgers charge for storage rather than computation: every account or object takes up space on every node, so a minimum balance (a reserve, or Solana's rent-exempt minimum) must stay locked while it exists. Tiny outputs that would cost more to spend than they're worth are called dust, and many networks refuse to create them."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "gas-saving",
+    "title": "Gas, and how to pay less for it",
+    "summary": "Why your dollars need a little gas to move, and how to keep that cost low.",
+    "body": {
+     "simple": [
+      "Digital dollars such as USDC and USDT live on networks like Ethereum, Polygon and BNB Chain. To move them, the network charges a small fee called gas, and it has to be paid in that network's own coin: ETH on Ethereum, POL on Polygon, BNB on BNB Chain.",
+      "So holding dollars isn't quite enough: each place your dollars sit needs a little gas before they can move.",
+      "## How to pay less",
+      "• Buy gas once, not every time. Every purchase has its own small cost, so buying enough for several payments at once is cheaper than buying a tiny bit before each one.",
+      "• Keep your dollars on the cheaper networks. Moving dollars on Polygon or BNB Chain usually costs a fraction of a cent. On Ethereum it can cost much more, especially when the network is busy.",
+      "• Fewer, bigger payments cost less than many small ones, since each payment pays its own gas whatever the amount.",
+      "• When someone pays you, ask them to use a cheap network if they can.",
+      "Gas goes to the network that carries your payment, not to Kalda."
+     ],
+     "detailed": [
+      "USDC and USDT are tokens: entries kept by a program (a smart contract) on each network. Moving a token means asking that program to update its records, and every network charges for the work in its own coin, known as gas.",
+      "• Ethereum: gas is paid in ETH. Its price follows demand and can rise sharply when the network is busy.",
+      "• Polygon: gas is paid in POL, usually a tiny fraction of a cent per transfer.",
+      "• BNB Chain: gas is paid in BNB, usually under a cent per transfer.",
+      "• Solana: fees are paid in SOL and are tiny, but receiving a token for the first time needs a small deposit (rent) for the account that holds it.",
+      "## Private addresses",
+      "When you're paid privately, each payment arrives at a brand-new one-time address (the ERC-5564 standard for stealth addresses). That keeps payments from being linked together, but each of those addresses needs its own gas before its dollars can move.",
+      "## Ways to save",
+      "• Buy gas in one go and share it out, rather than in many small purchases: every purchase and every transfer has its own fixed cost.",
+      "• Hold and receive dollars on Polygon or BNB Chain when you can; the same dollars cost far less to move there than on Ethereum.",
+      "• Swapping dollars from one network to another costs a little too, so it's best to keep them where moving them is cheapest."
+     ],
+     "complex": [
+      "## Gas as a unit of work",
+      "On Ethereum-style networks every operation has a fixed cost in gas units, and the fee is those units times the price per unit at the time. A token transfer calls the token contract's transfer function, which updates two balances in storage and emits an event; that costs a few tens of thousands of gas units whatever the amount moved.",
+      "`fee = gas used × (base fee + priority fee)`",
+      "## Why networks differ",
+      "Ethereum's base fee is set by an EIP-1559 fee market: it rises when blocks are full and falls when they aren't, so the same transfer can cost a few cents one hour and much more the next. Polygon and BNB Chain run the same virtual machine with more block space and cheaper native coins, so the same transfer costs far less.",
+      "## Who pays",
+      "A transaction must be signed by the account it spends from, and that account pays the fee from its own native balance. A token-only account therefore can't move anything until some native coin reaches it. Account abstraction (ERC-4337) lets a separate party, a paymaster, pay the fee instead; without it, the account itself must hold gas.",
+      "## Private addresses and batching",
+      "Stealth addresses (ERC-5564) give every payment a fresh account derived from the recipient's published keys. Each such account is independent on-chain, so each must be funded with gas before it can spend. Since every transaction carries a fixed base cost (21,000 gas for a plain transfer), funding many addresses in one purchase and spreading it out costs less than a separate purchase for each."
+     ]
+    },
+    "hasSkinsLimited": false
+   },
+   {
+    "id": "staking",
+    "title": "Staking and earning interest",
+    "summary": "Put coins to work for a yearly rate, and what you risk doing it.",
+    "shownFrom": "investor",
+    "body": {
+     "simple": [
+      "Some coins can earn a yearly rate while you hold them. On an Investment account, a coin's page shows how, when the coin offers it: Stake, and Unstake to take it back.",
+      "ETH is staked through Lido. Your ETH becomes stETH, which grows a little every day. Taking it back as ETH waits in a queue, usually a few days.",
+      "USDC and USDT earn interest through Aave. That isn't staking: your dollars are lent to borrowers, and you earn the interest they pay. You can usually take it back straight away.",
+      "Neither is a bank account. Nothing is insured, the rate isn't promised, and you could lose some or all of what you put in. Each coin's page lists the risks before anything is sent.",
+      "Every stake and unstake pays the network's fee. On a small amount, the fee can be more than a year's earnings: the screen tells you before you go ahead."
+     ],
+     "detailed": [
+      "## Staking ETH",
+      "Ethereum is secured by proof of stake: validators lock 32 ETH each and are paid for proposing and checking blocks. Lido pools ETH from many people, runs validators with it, and gives out stETH, a token that tracks your share of the pool and its rewards. The rate is Lido's average over the past week.",
+      "Getting ETH back means asking Lido's withdrawal queue. Requests are paid in order once validators have exited, so the wait depends on how many people are leaving. When it's ready, you collect it in one more step.",
+      "• Slashing: a validator that breaks the rules loses part of its stake, and with a pool that loss is shared by everyone in it.",
+      "• Contract risk: a bug or a hack in Lido's contracts could lose staked ETH.",
+      "• Price: stETH follows ETH, so its value goes up and down with ETH's.",
+      "## Lending USDC and USDT",
+      "Aave is a lending market run by smart contracts on several networks. Lenders put in a coin and receive a deposit token that grows with the interest borrowers pay. Borrowers must lock more collateral than they borrow; if it falls in value, it is sold to repay the loan.",
+      "• Rates move with demand: the more of the pool is borrowed, the more lenders earn.",
+      "• When nearly everything is borrowed, there may not be enough left to take yours back until borrowers repay or new lenders arrive.",
+      "• If collateral falls faster than it can be sold, the pool can be left short, and lenders bear it.",
+      "• The stablecoin itself can lose its $1 value, and its issuer can freeze it."
+     ],
+     "complex": [
+      "## Proof of stake",
+      "In proof of stake, the right to add blocks is given in proportion to coins locked as a bond rather than to computing work. Honest behaviour is rewarded with new coins and fees; provably dishonest behaviour, such as signing two conflicting blocks, destroys part of the bond. The yield comes from issuance and from fees paid by users.",
+      "## Liquid staking",
+      "A liquid staking token stands for a share of a staking pool. Two designs are common: a rebasing token, whose balance grows as rewards arrive, and a value-accruing token, whose balance stays fixed while each unit becomes worth more of the underlying coin. Either way, it can be traded while the stake itself stays locked, which is why its market price can drift from the coin it stands for.",
+      "## Pooled lending",
+      "A pooled lending market sets its rate by a utilisation curve: with U the share of deposits that is borrowed, the borrow rate rises slowly up to a target utilisation and steeply beyond it, to draw in lenders and push out borrowers. Lenders earn roughly the borrow rate times U, less a cut kept by the protocol.",
+      "`supply rate ≈ borrow rate × U × (1 − reserve factor)`",
+      "Loans are over-collateralised: each borrower's position has a health factor, the collateral's value times its liquidation threshold divided by the debt. Below 1, anyone may repay part of the debt and take collateral at a discount, which keeps the pool solvent as long as prices don't jump faster than liquidations can follow."
+     ]
+    },
+    "hasSkinsLimited": false
+   }
+  ]
+ }
+]

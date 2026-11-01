@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Staking and earning interest · Kalda Wallet</title>
+  <meta name="description" content="Put coins to work for a yearly rate, and what you risk doing it.">
+  <meta property="og:title" content="Staking and earning interest · Kalda Wallet">
+  <meta property="og:description" content="Put coins to work for a yearly rate, and what you risk doing it.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/staking.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › More</div>
+      <h1>Staking and earning interest</h1>
+      <p class="lead">Put coins to work for a yearly rate, and what you risk doing it.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Some coins can earn a yearly rate while you hold them. On an Investment account, a coin's page shows how, when the coin offers it: Stake, and Unstake to take it back.</p>
+        <p>ETH is staked through Lido. Your ETH becomes stETH, which grows a little every day. Taking it back as ETH waits in a queue, usually a few days.</p>
+        <p>USDC and USDT earn interest through Aave. That isn't staking: your dollars are lent to borrowers, and you earn the interest they pay. You can usually take it back straight away.</p>
+        <p>Neither is a bank account. Nothing is insured, the rate isn't promised, and you could lose some or all of what you put in. Each coin's page lists the risks before anything is sent.</p>
+        <p>Every stake and unstake pays the network's fee. On a small amount, the fee can be more than a year's earnings: the screen tells you before you go ahead.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Staking ETH</h3>
+        <p>Ethereum is secured by proof of stake: validators lock 32 ETH each and are paid for proposing and checking blocks. Lido pools ETH from many people, runs validators with it, and gives out stETH, a token that tracks your share of the pool and its rewards. The rate is Lido's average over the past week.</p>
+        <p>Getting ETH back means asking Lido's withdrawal queue. Requests are paid in order once validators have exited, so the wait depends on how many people are leaving. When it's ready, you collect it in one more step.</p>
+        <ul><li>Slashing: a validator that breaks the rules loses part of its stake, and with a pool that loss is shared by everyone in it.</li><li>Contract risk: a bug or a hack in Lido's contracts could lose staked ETH.</li><li>Price: stETH follows ETH, so its value goes up and down with ETH's.</li></ul>
+        <h3>Lending USDC and USDT</h3>
+        <p>Aave is a lending market run by smart contracts on several networks. Lenders put in a coin and receive a deposit token that grows with the interest borrowers pay. Borrowers must lock more collateral than they borrow; if it falls in value, it is sold to repay the loan.</p>
+        <ul><li>Rates move with demand: the more of the pool is borrowed, the more lenders earn.</li><li>When nearly everything is borrowed, there may not be enough left to take yours back until borrowers repay or new lenders arrive.</li><li>If collateral falls faster than it can be sold, the pool can be left short, and lenders bear it.</li><li>The stablecoin itself can lose its $1 value, and its issuer can freeze it.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Proof of stake</h3>
+        <p>In proof of stake, the right to add blocks is given in proportion to coins locked as a bond rather than to computing work. Honest behaviour is rewarded with new coins and fees; provably dishonest behaviour, such as signing two conflicting blocks, destroys part of the bond. The yield comes from issuance and from fees paid by users.</p>
+        <h3>Liquid staking</h3>
+        <p>A liquid staking token stands for a share of a staking pool. Two designs are common: a rebasing token, whose balance grows as rewards arrive, and a value-accruing token, whose balance stays fixed while each unit becomes worth more of the underlying coin. Either way, it can be traded while the stake itself stays locked, which is why its market price can drift from the coin it stands for.</p>
+        <h3>Pooled lending</h3>
+        <p>A pooled lending market sets its rate by a utilisation curve: with U the share of deposits that is borrowed, the borrow rate rises slowly up to a target utilisation and steeply beyond it, to draw in lenders and push out borrowers. Lenders earn roughly the borrow rate times U, less a cut kept by the protocol.</p>
+        <pre><code>supply rate ≈ borrow rate × U × (1 − reserve factor)</code></pre>
+        <p>Loans are over-collateralised: each borrower's position has a health factor, the collateral's value times its liquidation threshold divided by the debt. Below 1, anyone may repay part of the debt and take collateral at a discount, which keeps the pool solvent as long as prices don't jump faster than liquidations can follow.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/gas-saving.html"><small>Previous</small>Gas, and how to pay less for it</a>
+        
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

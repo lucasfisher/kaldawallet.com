@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notifications · Kalda Wallet</title>
+  <meta name="description" content="What Kalda tells you about, made on your own phone.">
+  <meta property="og:title" content="Notifications · Kalda Wallet">
+  <meta property="og:description" content="What Kalda tells you about, made on your own phone.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/notifications.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › More</div>
+      <h1>Notifications</h1>
+      <p class="lead">What Kalda tells you about, made on your own phone.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Kalda can let you know on your phone when something happens, such as:</p>
+        <ul><li>A swap finishing or being refunded, or a move between your private and public Zcash balances finishing.</li><li>A new secret message (who it's from, never what it says).</li><li>XRP locked for you, arriving, going out on schedule or coming back.</li></ul>
+        <p>These notifications are made on your phone. No company sends them, and Kalda has no server of its own that knows about you. Kalda asks for permission the first time one would be useful, and you can turn them off in your phone's settings.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <p>Most apps rely on a push service: the app maker's server sends a message to your phone through Apple or Google. Kalda's notifications are local instead: your phone looks at public networks directly and shows the notification itself. That works because:</p>
+        <ul><li>Public blockchains can be read by anyone, so your phone can see when a payment has arrived or a transaction has settled without asking anyone's permission.</li><li>Cross-chain swap networks publish the status of every swap, so the outcome of a swap (paid out or refunded) can be looked up openly.</li><li>The XRP Ledger keeps escrows (locks) as public records, showing who will receive what and when.</li><li>Zcash shielded messages are encrypted to the recipient, so only your own wallet can discover and read them.</li></ul>
+        <h3>What to expect</h3>
+        <p>Your phone's operating system decides when apps may run in the background, to save battery, so a notification can arrive a little after the event itself. Private Zcash messages are found while Kalda is open, because only your wallet can decrypt them.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Push and pull</h3>
+        <p>There are two ways to learn about events. In a push model, a server watches for events and sends them to a device. In a pull model, the device asks the source itself. Push saves the device work; pull avoids relying on, and revealing yourself to, a middleman.</p>
+        <p>A push notification needs a device token registered with the platform's notification service and with the app's server. That pairing links one device to its activity, so whoever runs the server learns what the user cares about and when. A pull model keeps that knowledge on the device.</p>
+        <h3>Reading public state</h3>
+        <p>Blockchains are replicated public ledgers. Any client can ask a node for an account's balance, a transaction's status or a ledger object, much as anyone can read a public notice board. Light clients go further and check what they're told against block headers instead of trusting the server.</p>
+        <h3>Finding private payments</h3>
+        <p>In shielded systems such as Zcash, outputs are encrypted to the recipient's key. A wallet discovers its own payments by trial decryption: it tries to decrypt each new output with its viewing key, and only outputs meant for it succeed. Nobody else can tell which outputs belong to whom, which is why this scanning has to happen on the recipient's own device.</p>
+        <h3>Settled, not just sent</h3>
+        <p>A transaction is final once the network's consensus can no longer reverse it. In proof-of-work chains finality is probabilistic and grows with each confirmation; in chains such as the XRP Ledger, a validated ledger is final within seconds. A trustworthy &quot;complete&quot; notification waits for that point.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/levels-and-settings.html"><small>Previous</small>Your account type</a>
+        <a class="next" href="/guides/network-fees.html"><small>Next</small>Network fees</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

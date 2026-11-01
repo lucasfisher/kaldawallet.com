@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THORChain · Kalda Wallet</title>
+  <meta name="description" content="Swaps real coins between blockchains, with no wrapped tokens anywhere.">
+  <meta property="og:title" content="THORChain · Kalda Wallet">
+  <meta property="og:description" content="Swaps real coins between blockchains, with no wrapped tokens anywhere.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/exchange-thorchain.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Exchanges</div>
+      <h1>THORChain</h1>
+      <p class="lead">Swaps real coins between blockchains, with no wrapped tokens anywhere.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>THORChain is a network that lets you trade a coin on one blockchain for a coin on another, without an exchange account and without anyone holding your money for you.</p>
+        <p>It works because the network itself owns pools of real coins on each blockchain it supports. You send it Bitcoin; it takes the Bitcoin into its Bitcoin pool and pays you Ethereum out of its Ethereum pool. Nothing is lent, and no IOU is involved — what arrives is the real coin on the real chain.</p>
+        <p>About a hundred independent operators run it. Each one has to lock up a large amount of the network's own coin to take part, which they lose if they misbehave, and no single one of them can move the pools' money alone.</p>
+        <h3>What it means for you</h3>
+        <p>Swaps through it take a few minutes, longer from Bitcoin-family chains, because the network waits until it is sure your deposit really happened.</p>
+        <p>The bigger your trade is compared with the pool you're trading against, the worse the price you get. Large swaps of a thinly traded coin cost noticeably more.</p>
+        <p>The operators can pause a chain, for example during an upgrade or while something looks wrong. A swap isn't offered while its chain is paused, and a swap that can't be finished is sent back to you, minus fees.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Continuous liquidity pools</h3>
+        <p>Every supported asset has a pool holding that asset and the network's own settlement asset, RUNE. There is no Bitcoin-to-Ethereum pool: a swap between them is two trades through RUNE, done in one operation. Pairing everything against one asset means n pools instead of n(n−1)/2, which is what makes supporting many chains practical.</p>
+        <h3>How a deposit becomes a swap</h3>
+        <p>You send your coin to an address the network controls on that chain, with a short instruction attached saying what you want and where to send it. The network's validators each watch the external chains and vote on what they saw; once enough of them agree the deposit happened, the swap executes and the payout is signed and broadcast on the destination chain.</p>
+        <h3>Who controls the money</h3>
+        <p>The addresses holding the pools are controlled jointly by the node operators, so that a large enough subset must cooperate to sign anything and no single operator ever holds a whole key. The set is rotated regularly, which limits what a group that goes bad can do and removes operators who stop behaving.</p>
+        <h3>Economic security</h3>
+        <p>Operators bond the network's own asset to take part, and the bond is slashable. The design holds as long as the total bonded is worth meaningfully more than the pooled assets it secures — if that stopped being true, attacking the network would be cheaper than running it honestly, which is why the protocol actively steers the ratio between bonded and pooled value.</p>
+        <h3>What a swap costs</h3>
+        <ul><li>The ordinary fee for sending your coin on its own chain.</li><li>A liquidity fee that grows with your trade's size relative to the pool — not a flat percentage.</li><li>An outbound fee covering the destination chain's cost of paying you.</li></ul>
+        <h3>Native assets, and why that matters</h3>
+        <p>There are no wrapped tokens and no bridge receipts: the asset you receive is the real one on its own chain. That removes a whole class of risk, since there is no issuer whose solvency you depend on. The cost is that the network has to hold real coins and watch real chains itself, which is where its complexity lives.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>The slip-based fee</h3>
+        <p>Rather than a fixed percentage, the fee is a function of the trade's size relative to depth. For a pool with asset depth X and rune depth Y, an input x returns</p>
+        <pre><code>y = (x · X · Y) / (x + X)²</code></pre>
+        <p>which is the constant-product result with the slip itself charged as the fee. The share taken grows as x/X grows, so a trade at 1% of pool depth pays about 1%, while one at 50% pays far more. Large trades are therefore self-limiting without needing a cap, and splitting a trade over time is a rational response.</p>
+        <h3>Threshold signatures over external chains</h3>
+        <p>The vaults are controlled by a threshold signature scheme: a set of n nodes can produce a valid signature for the address if at least t of them participate, and the full private key exists at no point and in no place. Because the signature is an ordinary one for the destination chain, the chain itself needs no knowledge of the network. Membership is rotated on a schedule — a churn — which bounds the exposure of any one committee and requires a key resharing protocol rather than a key handover.</p>
+        <h3>Consensus about other chains</h3>
+        <p>The hard problem is not signing but observation: the network must agree on facts about blockchains that cannot talk to it. Each validator reports what it has seen at a given external height, and an observation is acted on only once a supermajority agrees. This is why finality on the source chain gates everything: acting on a deposit that is later reorganised away would create an unbacked payout.</p>
+        <h3>The bond-to-pool invariant</h3>
+        <p>If bonded value falls below pooled value, a colluding subset of signers can profitably steal the pools. The protocol responds by moving rewards between bonders and liquidity providers to pull the ratio back, which makes the yield on each side a control signal rather than a fixed rate. It is an unusual property: the network's economic parameters are not set by governance but driven toward a safety condition.</p>
+        <h3>Failure modes and refunds</h3>
+        <p>Three situations are handled by protocol rule rather than discretion: a deposit whose instruction cannot be parsed, a swap whose output would fall below the minimum the sender specified, and a destination chain that is unavailable. All three resolve to a refund on the source chain, less the cost of making it — which is why a failed swap is not free, and why a dust-sized deposit can be consumed entirely by the cost of returning it.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/shared-wallets.html"><small>Previous</small>Family and business wallets</a>
+        <a class="next" href="/guides/exchange-near-intents.html"><small>Next</small>NEAR Intents</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private ETH, BNB and AVAX (stealth addresses) · Kalda Wallet</title>
+  <meta name="description" content="Get paid at a brand-new address every time, so payments can't be traced to you.">
+  <meta property="og:title" content="Private ETH, BNB and AVAX (stealth addresses) · Kalda Wallet">
+  <meta property="og:description" content="Get paid at a brand-new address every time, so payments can't be traced to you.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/stealth-addresses.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Privacy</div>
+      <h1>Private ETH, BNB and AVAX (stealth addresses)</h1>
+      <p class="lead">Get paid at a brand-new address every time, so payments can't be traced to you.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>On Ethereum, BNB Chain and Avalanche, anyone can look up an address and see every payment it has received. A private address fixes that for the person being paid.</p>
+        <p>It's like handing out a secret code instead of your home address: each person who pays you turns the code into a brand-new address used only once, and only your phone can tell those payments are yours.</p>
+        <p>Share your private address with contacts through Link Up. When you pay a contact who has shared theirs, the payment goes privately on its own. The private side of the ETH, BNB and AVAX cards shows and spends what you've received this way. It works for ETH, BNB and AVAX themselves, not for tokens.</p>
+        <p>When you pay privately, you choose whether to let them see it's from you. Paying from your private balance keeps your public wallet out of it; paying from your public wallet hides who you paid, but not that you paid.</p>
+        <p>Good to know: private addresses hide who was paid, not how much. Each payment costs network fees (gas), and spending several private amounts together can link them; you'll be warned before that happens.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>An open standard</h3>
+        <p>Stealth addresses on Ethereum-style networks follow ERC-5564, a public standard. Any wallet that supports it can pay your stealth meta-address, which starts with st:eth: and works the same on Ethereum, BNB Smart Chain and Avalanche C-Chain.</p>
+        <h3>Two transactions per payment</h3>
+        <ul><li>An announcement, posted to a public announcer contract shared by every ERC-5564 wallet, carrying what the recipient needs to recognise the payment.
+• The payment itself, to a fresh one-time address.
+Both pay gas.</li></ul>
+        <h3>Finding and spending</h3>
+        <p>The recipient's wallet reads the public announcements and tests each one with a private viewing key; a one-byte view tag lets it skip almost all of other people's announcements quickly. Each one-time address is an ordinary account: it holds its own funds, pays its own gas, and its private key can be worked out only by the recipient.</p>
+        <h3>What stays public</h3>
+        <ul><li>Amounts are visible on-chain.
+• Paying from a public address shows that address as the payer.
+• Spending from several one-time addresses at once links them.
+• Exchanges and wallets without ERC-5564 support can't pay a stealth meta-address.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Diffie–Hellman on an elliptic curve</h3>
+        <p>Stealth addresses rest on elliptic-curve Diffie–Hellman. On a curve with generator point G, a private key is a number k and its public key is the point K = k·G. Two parties with keys (a, A) and (b, B) can each compute the same point a·B = b·A = ab·G, while an observer who sees only A and B cannot.</p>
+        <h3>Building a one-time address</h3>
+        <p>In ERC-5564's scheme for the secp256k1 curve, the recipient publishes two public keys, a spending key P_spend and a viewing key P_view. The payer picks a random ephemeral key r and computes:</p>
+        <pre><code>R = r·G
+s = r·P_view
+h = keccak256(s)
+view tag = first byte of h
+P_stealth = P_spend + h·G
+address = last 20 bytes of keccak256(P_stealth)</code></pre>
+        <p>The payer publishes R and the view tag. The recipient reaches the same secret as s = p_view·R with the private viewing key, derives h, and checks whether P_spend + h·G gives the announced address. The view tag rejects about 255 in 256 unrelated announcements after a single hash.</p>
+        <h3>Spending, and why there are two keys</h3>
+        <p>The one-time address's private key is p_spend + h (mod n), where n is the order of the curve, so only the holder of p_spend can compute it. Splitting the keys means a viewing key can find payments without being able to spend them.</p>
+        <h3>Limits of the model</h3>
+        <p>Stealth addresses break the link between a recipient and their payments; they don't hide amounts or the payer's address. Behaviour matters too: funding one-time addresses from a known wallet, or spending them together, recreates the links the scheme removes.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/shielded-zcash.html"><small>Previous</small>Private Zcash (shielded balance)</a>
+        <a class="next" href="/guides/fresh-addresses.html"><small>Next</small>Fresh addresses</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Keeping your wallet safe · Kalda Wallet</title>
+  <meta name="description" content="The locks that protect you, and the scams to watch for.">
+  <meta property="og:title" content="Keeping your wallet safe · Kalda Wallet">
+  <meta property="og:description" content="The locks that protect you, and the scams to watch for.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/security.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>Keeping your wallet safe</h1>
+      <p class="lead">The locks that protect you, and the scams to watch for.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Kalda locks whenever you leave the app. Open it with your fingerprint, your face, or your phone's PIN, pattern or password. Your phone needs a screen lock for this to work.</p>
+        <p>You'll be asked again before every payment or swap, and before your recovery phrase is shown, so someone holding your unlocked phone still can't send your money.</p>
+        <p>Screenshots are blocked on screens that show secrets, and addresses you copy are cleared from the clipboard after a short while.</p>
+        <p>Never tell anyone your 12 words and never type them into a website or another app. Nobody from Kalda will ever ask for them; anyone who does is trying to steal from you.</p>
+        <p>Before paying, check the whole address and slow down if someone is rushing you. Pay saved contacts rather than copying addresses from your history.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Your phone's own security</h3>
+        <p>The app lock uses the authentication your phone already provides: fingerprint, face, PIN, pattern or password. Modern phones keep secrets in a hardware-backed secure area designed so other apps can't read them, even on the same device.</p>
+        <h3>Asking again for every payment</h3>
+        <p>Unlocking the app lets you look around. Moving money, revealing your phrase and other sensitive steps each need a fresh check, so a phone left unlocked on a table is still not enough to spend.</p>
+        <h3>What no lock can protect</h3>
+        <ul><li>Your recovery phrase works on its own. Anyone who has the words can rebuild your wallet on any device, without your phone or your fingerprint.</li><li>Blockchain payments are final. A payment to a scammer is a valid transaction, and no network has a chargeback.</li><li>A phone infected with malware can watch the screen. Keep your phone updated and install apps only from sources you trust.</li></ul>
+        <h3>Common scams</h3>
+        <ul><li>Fake support, “wallet validation” or “sync” requests that ask for your phrase or ask you to scan a code into another app.</li><li>Address poisoning: tiny payments from lookalike addresses, planted so you copy the wrong one from your history.</li><li>Addresses swapped in emails, chats or web pages. Link Up with matching codes, and signed contact cards, avoid this.</li><li>Urgency: real people rarely need money “right now”.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Secure hardware</h3>
+        <p>Many phones include a secure element or trusted execution environment: a small, isolated processor with its own memory. Keys generated there can be used to encrypt and decrypt but are designed never to leave it, so even software with full control of the main system can't simply copy them out.</p>
+        <h3>Biometrics as a gate</h3>
+        <p>A fingerprint or face scan isn't a key itself. The phone's secure hardware compares the scan to a stored template and, on a match, releases permission to use a key it guards. The biometric data never needs to leave the device.</p>
+        <h3>Defence in depth</h3>
+        <p>Security engineers layer independent protections so that one failure isn't fatal: a device lock, an app lock, a fresh check for each sensitive action, and limits on what the screen and clipboard expose. An attacker has to defeat several of them, not just one.</p>
+        <h3>The threat model</h3>
+        <p>Every system protects against some attackers and not others. A self-custody wallet defends well against a thief holding a locked phone, but cannot defend against someone who already has the recovery phrase, or against a user persuaded to sign a payment. Knowing which is which is the core of staying safe.</p>
+        <h3>Social engineering</h3>
+        <p>Most crypto losses come not from broken cryptography but from people being persuaded to reveal a secret or approve a payment. Scams lean on urgency, authority and fear. Because a signed blockchain transaction can't be reversed, the only reliable defence is to slow down and verify through a channel you already trust.</p>
+        <h3>Network privacy</h3>
+        <p>Reading a balance means asking some server about an address. The server never learns your keys, but it can see which addresses are asked about together and from which network location, and could link them. Fresh addresses limit what the blockchain reveals, not what a data provider can observe.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/activity.html"><small>Previous</small>History</a>
+        <a class="next" href="/guides/shielded-zcash.html"><small>Next</small>Private Zcash (shielded balance)</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

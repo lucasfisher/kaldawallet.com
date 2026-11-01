@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fresh addresses · Kalda Wallet</title>
+  <meta name="description" content="A different address for each person, so your payments can't be lined up.">
+  <meta property="og:title" content="Fresh addresses · Kalda Wallet">
+  <meta property="og:description" content="A different address for each person, so your payments can't be lined up.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/fresh-addresses.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Privacy</div>
+      <h1>Fresh addresses</h1>
+      <p class="lead">A different address for each person, so your payments can't be lined up.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>On Bitcoin and some other coins, anyone can look up an address and see every payment it has ever received. If everyone pays you at the same address, they can all see each other's payments.</p>
+        <p>So each contact you share with gets their own address, like giving each friend a different letterbox. On the Receive screen, New address makes a fresh one whenever you like, for example for a one-off payment.</p>
+        <p>You don't need to do anything else. Old addresses keep working, everything adds up to one balance, and your recovery phrase brings them all back. Profile → Backup &amp; security → My keys lists every address with what it holds.</p>
+        <p>This works on Bitcoin, Litecoin, Dogecoin, Bitcoin Cash and Monero. Tip: sending everything at once (Max) combines all your coins in one payment, which shows they belong together.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Coins that work like cash</h3>
+        <p>Bitcoin, Litecoin, Dogecoin and Bitcoin Cash use the UTXO model: your balance is a collection of separate coins (unspent transaction outputs), each locked to an address. A wallet can use as many addresses as it likes, and the network treats them all alike.</p>
+        <p>Account-based networks such as Ethereum, the XRP Ledger and Solana work differently: one address holds one running balance, so a fresh address would be a separate account. On Ethereum, BNB Chain, Avalanche and Polygon, stealth addresses give the same benefit.</p>
+        <h3>One phrase, endless addresses</h3>
+        <p>Hierarchical deterministic (HD) wallets, an open standard most wallets share, turn one recovery phrase into a numbered sequence of addresses. Restoring the phrase recreates the same sequence. Wallets find used addresses by checking them in order until they meet a run of unused ones, a convention known as the gap limit.</p>
+        <h3>Monero subaddresses</h3>
+        <p>Monero is already private on-chain, but its subaddresses let you give different people different addresses for one wallet, so two people can't compare notes and discover they're paying the same person.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Why address reuse leaks</h3>
+        <p>Public blockchains form a transaction graph: every coin points back to the coins that created it. Analysts cluster addresses into wallets using heuristics, and reusing one address puts every payment to it in the same cluster at once.</p>
+        <h3>Common-input ownership</h3>
+        <p>A transaction that spends several coins needs a valid signature for each, so observers assume all its inputs belong to one owner. This common-input-ownership heuristic is the strongest clustering rule, and it's why combining coins from many addresses in one payment, or sweeping everything, links them.</p>
+        <h3>Change detection</h3>
+        <p>Most payments create change: an output back to the sender. Analysts guess which output is change from clues such as round amounts, address type or how it is later spent, and so follow the sender's money forward.</p>
+        <h3>Deterministic key derivation</h3>
+        <p>HD wallets derive each child key from a keyed hash (HMAC-SHA512) of a parent key and an index. The results look random to anyone without the parent key, so addresses from one phrase can't be linked just by looking at them, yet the owner can regenerate every one from the phrase.</p>
+        <h3>Addresses from keys</h3>
+        <p>An address is a hash of a public key (or of a script), so a fresh key gives an unrelated-looking address at no cost. Encodings such as Base58Check and Bech32 add a checksum, so typing mistakes are caught before any money moves.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/stealth-addresses.html"><small>Previous</small>Private ETH, BNB and AVAX (stealth addresses)</a>
+        <a class="next" href="/guides/secret-messages.html"><small>Next</small>Secret messages</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

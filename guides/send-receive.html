@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sending and receiving · Kalda Wallet</title>
+  <meta name="description" content="How to get paid, how to pay, and how to do it safely.">
+  <meta property="og:title" content="Sending and receiving · Kalda Wallet">
+  <meta property="og:description" content="How to get paid, how to pay, and how to do it safely.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/send-receive.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>Sending and receiving</h1>
+      <p class="lead">How to get paid, how to pay, and how to do it safely.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>An address is like an account number for one coin. Give it to people so they can pay you. It's safe to share: nobody can take money out of your wallet with it.</p>
+        <p>To get paid, open a coin on the Wallet tab and tap Receive. Show the QR code, or tap Copy address and send it. For Bitcoin, Litecoin, Dogecoin and Bitcoin Cash you can tap New address for a fresh one; older ones keep working.</p>
+        <p>To pay, open a coin, tap Send, then pick a contact, paste an address or scan a QR code, and type the amount. You'll see who you're paying and how much, then confirm with your fingerprint, face or PIN.</p>
+        <p>Check the whole address before you send, and stop if you see a warning such as “Possible scam address”. A payment can't be cancelled or undone once sent.</p>
+        <p>Each payment costs a small network fee, paid to the network, not to Kalda. Sending XRP to an exchange? Enter the destination tag they give you in the tag box.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Every coin is its own network</h3>
+        <p>Bitcoin, Ethereum, XRP and the others are separate blockchains with their own address formats. A coin can only be received at an address on its own network: sending Bitcoin to an Ethereum address doesn't work.</p>
+        <h3>Fees</h3>
+        <p>Each network sets its own fee rules. Bitcoin-style networks price block space by size, so busier times cost more. Ethereum and similar chains charge gas, priced by a market the network runs itself. The XRP Ledger destroys a tiny fee with each transaction. Tokens such as USDC on Ethereum pay their fee in the chain's own coin, so you need a little ETH to send them.</p>
+        <h3>Reserves</h3>
+        <p>Some networks ask accounts to hold a minimum. The XRP Ledger requires a small reserve in every account, plus a little more for each object the account owns, and a new XRP address only exists once it receives at least that reserve. Solana has a similar rule for tiny balances.</p>
+        <h3>Finality</h3>
+        <p>A payment is final once the network includes it in its ledger. Bitcoin-style coins grow more certain with each new block (each “confirmation”); the XRP Ledger settles in a few seconds. No public blockchain has a chargeback or undo.</p>
+        <h3>Destination tags</h3>
+        <p>The XRP Ledger lets one address serve many customers by adding a number, the destination tag, to each payment. Exchanges rely on it to know whose deposit it is, so always include the tag they give you.</p>
+        <h3>Lookalike addresses</h3>
+        <p>Because anyone can send a tiny payment to anyone, scammers plant addresses that share the first and last few characters of ones you use. This is called address poisoning. Paying saved contacts, and reading the whole address, defeats it.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Two ledger models</h3>
+        <p>Blockchains keep balances in one of two ways. In the UTXO model (Bitcoin, Litecoin, Dogecoin, Zcash's transparent pool), money exists as separate unspent outputs, like banknotes; a payment consumes some outputs and creates new ones, one of which may return change to you. In the account model (Ethereum, XRP, Solana), the ledger keeps a balance per address and a payment debits one and credits another.</p>
+        <pre><code>inputs = outputs + fee</code></pre>
+        <h3>Signing a transaction</h3>
+        <p>A transaction states what moves where. The wallet hashes it and signs the hash with the private key. Every node checks the signature against the public key before accepting it, so a transaction can't be altered after signing without becoming invalid.</p>
+        <h3>Consensus and finality</h3>
+        <p>Proof-of-work chains order transactions by having miners compete to find a hash below a target; each new block on top makes reversing an older one exponentially harder, which is why confirmations accumulate. Proof-of-stake and federated-consensus ledgers (such as Ethereum or the XRP Ledger) instead reach agreement among validators, and a transaction becomes final once enough of them vote for it.</p>
+        <h3>Fee markets</h3>
+        <p>Block space is scarce, so users bid for it. On Ethereum, each block has a base fee that rises when blocks are full and falls when they're empty, and that part is burned; a small tip on top goes to the block producer. Bitcoin uses a simpler auction where the highest fee per byte tends to be included first.</p>
+        <h3>Checksums in addresses</h3>
+        <p>Most address formats include a checksum, a short code computed from the rest of the address, so a single mistyped character is detected before any payment is made. A checksum catches accidents, not deliberate lookalikes: a scammer's address is perfectly valid.</p>
+        <h3>Fresh addresses</h3>
+        <p>On UTXO chains, nothing forces you to reuse an address. Giving each payer a different address keeps strangers from adding up your payments on a public blockchain, even though all the addresses come from the same keys.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/wallet-and-phrase.html"><small>Previous</small>Your wallet and recovery phrase</a>
+        <a class="next" href="/guides/contacts-link-up.html"><small>Next</small>Contacts and Link Up</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

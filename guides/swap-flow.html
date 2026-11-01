@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The chart on a swap · Kalda Wallet</title>
+  <meta name="description" content="What the picture on a swap review is telling you.">
+  <meta property="og:title" content="The chart on a swap · Kalda Wallet">
+  <meta property="og:description" content="What the picture on a swap review is telling you.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/swap-flow.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>The chart on a swap</h1>
+      <p class="lead">What the picture on a swap review is telling you.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Before a swap goes ahead, Kalda draws it as a picture so you can see the whole journey your money takes before you agree to it.</p>
+        <p>Each circle is a coin your money passes through. The first is what you're spending, the last is what you'll end up with. An arrow between two circles is one move, named for the exchange that makes it. The exchanges get circles of their own, each wearing its logo — THORChain (RUNE's), NEAR Intents (NEAR's) and Uniswap (its unicorn): your coin is sent into it on one arrow, it makes the swap, and the new coin leaves it on the next arrow, to your wallet or straight to your contact's. A swap through two exchanges shows both.</p>
+        <p>The number on the left of an arrow is what that move costs: the network fee to send the coin, plus what the swap itself takes. Add them up and you have the cost of the whole swap — there's nothing hidden between the circles.</p>
+        <p>The words on the right of an arrow say what happens for that move, in order.</p>
+        <p>Sometimes there are three circles instead of two. That means your coin can't be traded directly for the one you want, so it goes through a coin in the middle. You pay for two moves instead of one, which is why the chart shows them separately rather than adding them together.</p>
+        <p>Don't care for the picture? Tap the Swap path heading and it folds to one line. It stays folded on every swap until you tap it again.</p>
+        <h3>While it's happening</h3>
+        <p>Once you've agreed, the same chart appears on the History tab and fills in as the swap goes: a circle turns green when your money has reached that coin, and an arrow turns green when that move is done. Whatever is happening right now is lit up, and what hasn't started yet stays dim.</p>
+        <p>If something goes wrong, that part turns red — so you can see exactly how far your money got, rather than only that it didn't arrive.</p>
+        <p>A swap with more circles isn't more dangerous, but it does have more to pay for and more to wait for.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Why a swap has a shape at all</h3>
+        <p>No single pool holds every pair of coins. Trading between two coins means finding a path through pools that do exist, and that path is what the chart draws. A direct pair is one move; anything else goes through a widely traded coin in the middle, because that is where the liquidity is.</p>
+        <h3>Nodes and edges</h3>
+        <p>Each circle is an asset the value takes the form of along the way. Each arrow is a settlement: a transaction on a blockchain, or a trade inside a pool. The distinction matters for timing, because a move that has to be confirmed by a blockchain waits for blocks, while a move inside one contract does not.</p>
+        <h3>The cost on each arrow</h3>
+        <p>Every move has its own cost and they are not the same kind of cost. Sending a coin to begin with costs that blockchain's own fee. A trade inside a pool costs a share of what passes through it, which grows with the size of your trade relative to the pool. Being paid out on another blockchain costs that chain's fee, paid for you out of the proceeds. Showing them per move is what makes it possible to see which part of a swap is expensive.</p>
+        <h3>Two moves mean two prices</h3>
+        <p>A two-move swap is quoted as two prices, not one. The first is known when you agree; the second is quoted again when the middle coin actually arrives, because by then the market has moved. If the second price has fallen further than you agreed to tolerate, you're asked before anything else is sent, and your money is sitting in your own wallet in the middle coin while you decide.</p>
+        <h3>Why the progress can stall and still be fine</h3>
+        <p>The chart fills in as each move settles. Moves across blockchains wait for confirmations, which is why a swap can sit on one arrow for minutes without anything being wrong. The lit step is the network's own description of what it is doing, not an estimate.</p>
+        <h3>When a move fails</h3>
+        <p>A failed move is shown in place, red, with the earlier moves still green. That is the honest picture: the value really did get that far. What happens next depends on where it stopped — a failed first move is refunded to where it came from, while a failed later move leaves the middle coin in your wallet, yours to finish or keep.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Swaps as a path in a graph</h3>
+        <p>Treat assets as vertices and pools as edges: a swap is a path, and its output is the composition of each edge's price function. With a constant-product pool the output of one hop is</p>
+        <pre><code>Δy = y·Δx / (x + Δx)</code></pre>
+        <p>so composing two hops multiplies both the price impacts and one minus each fee. Two 0.3% hops cost about 0.6%, and the impacts compound rather than add. This is why a direct pair, where one exists with real depth, beats a two-hop path of similar size — and why the comparison must be made on the output after fees rather than on the quoted rate.</p>
+        <h3>Why hub-and-spoke topologies exist</h3>
+        <p>A network supporting n assets would need n(n−1)/2 pools to offer every pair directly, each needing its own liquidity. Pairing every asset against one settlement asset instead needs n pools and gives every pair in two hops. The cost of that economy is paid by the trader, in a second hop's fee and impact; the benefit is that liquidity is not fragmented across thousands of thin pools.</p>
+        <h3>Execution risk between the hops</h3>
+        <p>A multi-hop swap that cannot settle atomically — because the hops are on different blockchains — has real exposure between them. The holder is exposed to the middle asset's price for as long as settlement takes, and the second hop's price is unknowable when the first is signed. Mitigations are all variations on bounding the loss rather than removing it: a minimum output on each hop, a tolerance agreed in advance, and quoting the later hop fresh at the moment it is sent.</p>
+        <h3>Cost attribution</h3>
+        <p>Costs on such a path fall into three kinds that scale differently: a per-transaction cost, which is fixed and therefore dominates small trades; a proportional fee, flat in percentage terms; and price impact, which grows superlinearly with size relative to depth. A chart that shows a single total cannot express this. Per-edge costs can, which is why the breakdown is per move: it is the only presentation in which a user can see that their trade is too small for the fixed part, or too large for the pool.</p>
+        <h3>Observability as a design constraint</h3>
+        <p>A path crossing several settlement systems has no single authority that knows its state. Progress is inferred: by watching for a deposit's confirmations, by a contract event, by a payout appearing at a destination address. Each inference has its own latency and its own failure mode, which is why a truthful progress display distinguishes “not yet observed” from “failed” rather than collapsing both into an error.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/swaps.html"><small>Previous</small>Swapping coins</a>
+        <a class="next" href="/guides/activity.html"><small>Next</small>History</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

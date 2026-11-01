@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Network fees · Kalda Wallet</title>
+  <meta name="description" content="The small charge each network takes to carry a payment.">
+  <meta property="og:title" content="Network fees · Kalda Wallet">
+  <meta property="og:description" content="The small charge each network takes to carry a payment.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/network-fees.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › More</div>
+      <h1>Network fees</h1>
+      <p class="lead">The small charge each network takes to carry a payment.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Every time you send crypto, the network that carries it charges a small fee. It's like postage on a letter: you pay it to get your payment delivered.</p>
+        <p>The network fee goes to the network, not to Kalda. You see it before you send, and it's taken from your balance.</p>
+        <p>Some coins need a little to stay behind. For example, an XRP wallet must always keep a small amount. If you tap the most you can send, room is left for the fee and anything that has to stay.</p>
+        <p>Sending a token such as USDC on Ethereum needs a little ETH for its fee. A swap also has the swap network's own fee, shown on its own line on the Swap screen.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <p>Each network sets its own fee rules, and they're all public:</p>
+        <ul><li>Bitcoin, Litecoin, Dogecoin and Bitcoin Cash: the fee depends on the payment's size in bytes, not on the amount. A payment that gathers many small coins is bigger, so it costs more. When the network is busy, fees rise.</li><li>Ethereum, BNB Chain and Avalanche: the fee is called gas. Ethereum's fee market (EIP-1559) has a base fee that rises and falls with demand, plus a small tip. Tokens such as USDC and USDT pay their gas in ETH.</li><li>XRP Ledger: a tiny fee, plus a reserve that must stay in every account, and a little more for each thing the account holds on the ledger, such as a trust line or an escrow.</li><li>Zcash: fees follow ZIP 317, based on how many pieces a payment has, not on the amount.</li><li>Solana: a small fixed fee per signature. An account must be emptied completely or keep a small minimum balance.</li><li>TRON: often free, paid from daily bandwidth; sending to a brand-new address costs a little extra to create it.</li><li>Cardano, Cosmos and RUNE: Cardano charges by transaction size and asks every output to carry a minimum of ADA; Cosmos and RUNE charge a fee set by their networks.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Why fees exist</h3>
+        <p>Block space is scarce: each block can hold only so much. Fees ration that space and make spam expensive. They're paid to the miners or validators who include transactions, or in some designs destroyed (burned), which makes the remaining coins slightly scarcer. Moving a million costs the network the same as moving one, since the work is checking signatures and storing data, not counting value; that's why fees follow size or computation, unlike card fees, which follow the amount.</p>
+        <h3>UTXO and account models</h3>
+        <p>Bitcoin-style chains use unspent transaction outputs (UTXOs): coins are discrete pieces, and a payment spends whole pieces as inputs and creates new outputs, including change back to the sender. Size, and so the fee, grows with the number of inputs and outputs. Account-based chains such as Ethereum keep a balance per account, and fees depend on the computation a transaction needs.</p>
+        <pre><code>fee = fee rate × transaction size        size ≈ overhead + per-input + per-output</code></pre>
+        <h3>Fee markets</h3>
+        <p>When demand exceeds space, users compete by offering higher fees, like an auction. Ethereum's EIP-1559 makes this more predictable: a base fee adjusts automatically from block to block depending on how full the last block was, and is burned, while a smaller priority fee goes to the validator.</p>
+        <pre><code>fee paid = gas used × (base fee + priority fee)     base fee moves by at most 12.5% per block</code></pre>
+        <h3>Reserves and dust</h3>
+        <p>Some ledgers charge for storage rather than computation: every account or object takes up space on every node, so a minimum balance (a reserve, or Solana's rent-exempt minimum) must stay locked while it exists. Tiny outputs that would cost more to spend than they're worth are called dust, and many networks refuse to create them.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/notifications.html"><small>Previous</small>Notifications</a>
+        <a class="next" href="/guides/gas-saving.html"><small>Next</small>Gas, and how to pay less for it</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

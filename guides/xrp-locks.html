@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Locks and scheduled payments · Kalda Wallet</title>
+  <meta name="description" content="Lock XRP until a date, pay someone later, or set up an allowance.">
+  <meta property="og:title" content="Locks and scheduled payments · Kalda Wallet">
+  <meta property="og:description" content="Lock XRP until a date, pay someone later, or set up an allowance.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/xrp-locks.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › XRP</div>
+      <h1>Locks and scheduled payments</h1>
+      <p class="lead">Lock XRP until a date, pay someone later, or set up an allowance.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>XRP tools → Savings lock, scheduled &amp; timed payments lets you put XRP in a locked box on the XRP Ledger itself. You can choose:</p>
+        <ul><li>Savings lock: put your own XRP away until a date. Nobody can spend it before then, not even you.</li><li>Claim by a deadline, or future gift: lock XRP for someone. With a deadline they must collect it in time, or it comes back to you. A future gift can be collected from a date you choose.</li><li>Scheduled payment or allowance: pay someone once on a future day, or regularly, like pocket money. You can cancel any payment until it has been paid.</li></ul>
+        <p>Savings locks, deadlines and gifts can't be undone, so check the amount, date and person before you confirm. Each open lock sets aside 0.2 XRP of your deposit until it's settled, and Kalda lets you know when someone locks XRP for you.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Escrow on the XRP Ledger</h3>
+        <p>Escrow is built into the XRP Ledger. Creating one moves XRP out of your spendable balance into a ledger object that names a recipient and the rules for release. From then on the XRP is held by the network itself, not by any company. An escrow can have:</p>
+        <ul><li>A finish time: before it, nobody can release the escrow. After it, anyone may submit the release, but the XRP can only ever go to the named recipient.</li><li>A cancel time (optional): after it, the escrow can no longer be released, and anyone may send the XRP back to its owner. Before it, not even the owner can take it back.</li><li>A crypto-condition (optional): a lock that opens only when a matching secret is shown. It lets a payment be prepared in advance yet released only if its sender chooses to.</li></ul>
+        <h3>Reserves and limits</h3>
+        <p>Each open escrow holds one owner reserve (0.2 XRP today) on the sender's account until it's finished or cancelled, so an allowance of ten payments sets aside 2 XRP. The ledger judges every time by its own clock: the agreed close time of each validated ledger. Escrow of tokens is only possible when the token's issuer allows it, and RLUSD's issuer doesn't, so locks hold XRP.</p>
+        <p>A family or business wallet can lock XRP too. Like any spend from that wallet, the lock needs its co-signers' approval first.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Time locks</h3>
+        <p>A time lock is a rule in the ledger's state machine: a transaction that releases the funds is valid only if the ledger's agreed time is past a given point. Every validator applies the same rule to the same agreed timestamp, so no single party, the sender included, can override it.</p>
+        <h3>Hash locks and crypto-conditions</h3>
+        <p>A cryptographic hash function such as SHA-256 maps any input to a fixed 256-bit fingerprint. It's easy to compute forwards, infeasible to reverse, and infeasible to make two inputs share a fingerprint. A hash lock publishes the fingerprint and opens for whoever presents an input (the preimage) that hashes to it:</p>
+        <pre><code>condition = SHA-256(preimage)        opens ⇔ SHA-256(presented) = condition</code></pre>
+        <p>The XRP Ledger follows the Crypto-Conditions standard written for the Interledger Protocol and supports its PREIMAGE-SHA-256 type. Presenting the preimage makes it public, so each hash lock opens only once.</p>
+        <h3>Hashed time-locked contracts</h3>
+        <p>Combining a hash lock with a time-out gives a hashed time-locked contract (HTLC): either the secret is revealed before the deadline and the funds move forward, or the deadline passes and they go back. HTLCs make a payment all-or-nothing without trusting a middleman, which is why they underpin payment channels, the Lightning Network and atomic swaps between different blockchains.</p>
+        <h3>Reserves as a price for state</h3>
+        <p>Every object in the ledger's current state must be kept by every validator. A refundable deposit per object puts a price on that storage, and returning the deposit when the object is removed rewards cleaning up.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/xrp-rlusd.html"><small>Previous</small>XRP and RLUSD</a>
+        <a class="next" href="/guides/shared-wallets.html"><small>Next</small>Family and business wallets</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

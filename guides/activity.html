@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>History · Kalda Wallet</title>
+  <meta name="description" content="See what you've sent, received and swapped.">
+  <meta property="og:title" content="History · Kalda Wallet">
+  <meta property="og:description" content="See what you've sent, received and swapped.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/activity.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>History</h1>
+      <p class="lead">See what you've sent, received and swapped.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>The History tab, in the bar at the bottom, is your wallet's diary: money you've sent, received and swapped, newest first.</p>
+        <p>Use the two buttons at the top to show only payments with one contact, or only one coin. Tap Show all to clear them. A contact's card also has Show history.</p>
+        <p>A payment shows “Pending” while the network is still working on it and “Confirmed” once it's done; a swap that was refunded shows as failed. Tap a row to open it on a public website for that coin.</p>
+        <p>Where possible, you'll see who paid you, such as a contact's name or a swap payout. Your history stays on this phone; it isn't part of your recovery phrase, so a new phone may start with a shorter list.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Public ledgers</h3>
+        <p>Every public blockchain keeps a permanent record of every transaction. Anyone can read it, so a wallet's history can be rebuilt for many coins just from its addresses.</p>
+        <h3>Block explorers</h3>
+        <p>A block explorer is a public website that displays a blockchain in readable form: transactions, blocks, addresses and confirmations. Opening a payment there lets you check it independently of any wallet.</p>
+        <h3>Confirmations and finality</h3>
+        <ul><li>On Bitcoin-style networks, a payment waits in a public queue of unconfirmed transactions (the mempool) and then gains a confirmation with each new block.</li><li>The XRP Ledger finalises payments in seconds, so there's nothing to count.</li><li>A swap passes through stages on the swap network: deposit seen, swapping, paying out, then done or refunded.</li></ul>
+        <h3>Private payments</h3>
+        <p>Shielded Zcash and Monero payments are encrypted on their blockchains. Outsiders can't read them; only your own keys can find and decrypt the ones meant for you.</p>
+        <h3>Privacy on transparent chains</h3>
+        <p>On transparent blockchains, anyone with one of your addresses can see that address's history. Using a fresh address for each person, where the coin allows it, makes your payments harder to link together.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Blocks and hash chains</h3>
+        <p>A blockchain groups transactions into blocks, and each block contains the cryptographic hash of the one before it. Changing any old transaction would change that block's hash and break every link after it, which is what makes the record tamper-evident.</p>
+        <pre><code>header(n) = H(header(n−1), Merkle root, …)</code></pre>
+        <h3>Merkle trees</h3>
+        <p>The transactions in a block are hashed in pairs, and those hashes paired again, up to a single Merkle root stored in the block header. Proving a transaction is in a block then needs only a short path of hashes, not the whole block: this is how light clients verify payments cheaply.</p>
+        <h3>Probabilistic and deterministic finality</h3>
+        <p>In proof-of-work chains, a block can in theory be replaced by a longer competing chain, but the chance falls rapidly with each block built on top, so confirmations measure confidence. Byzantine-fault-tolerant ledgers decide finality by validator vote: once agreed, a transaction is final immediately.</p>
+        <h3>Indexing</h3>
+        <p>Blockchains are organised by block, not by address, so answering “what happened to this address?” requires an index built by reading every block. Public indexers do this work and serve the results; they can see which addresses are being asked about, though never any keys.</p>
+        <h3>Trial decryption</h3>
+        <p>On privacy chains, outputs are encrypted to the recipient. A wallet finds its own payments by trying to decrypt each new output with its viewing key; only the intended recipient's key succeeds. History there can't come from an outside index: it has to be found with the keys themselves.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/swap-flow.html"><small>Previous</small>The chart on a swap</a>
+        <a class="next" href="/guides/security.html"><small>Next</small>Keeping your wallet safe</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your wallet and recovery phrase · Kalda Wallet</title>
+  <meta name="description" content="Your 12 secret words are your wallet. Keep them safe.">
+  <meta property="og:title" content="Your wallet and recovery phrase · Kalda Wallet">
+  <meta property="og:description" content="Your 12 secret words are your wallet. Keep them safe.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/wallet-and-phrase.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>Your wallet and recovery phrase</h1>
+      <p class="lead">Your 12 secret words are your wallet. Keep them safe.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Kalda is a wallet you look after yourself. No bank or company holds your money for you, and nobody at Kalda can see it, freeze it or get it back for you.</p>
+        <p>When you made your wallet, you were shown 12 words. This is your recovery phrase: the master key to every coin in your wallet. One set of words covers them all.</p>
+        <p>Write the 12 words on paper, in order, and keep the paper somewhere safe and private. If your phone is lost or broken, these words bring your money back on a new phone. Anyone who sees them can take everything, so never show them to anyone.</p>
+        <p>To see the words again, go to Profile → Backup &amp; security → Recovery phrase; you'll confirm it's you with your fingerprint, face or phone PIN first. On a new phone, choose “I already have a recovery phrase” and type the words in order.</p>
+        <p>Profile → Backup &amp; security → Secret sharing lets you split a backup between people you trust. Reset wallet, at the bottom of Backup &amp; security, wipes the wallet from this phone; only use it once your words are safely written down.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Self-custody</h3>
+        <p>Your money lives on public blockchains, not inside the app. What the app holds is the key that proves you own it. Every payment is signed with that key on your phone, and the networks accept it because the signature checks out, not because any company approved it.</p>
+        <h3>An open standard</h3>
+        <p>Your recovery phrase follows BIP-39, an open standard most wallets share. It turns a large random number into words from a fixed public list of 2,048 words, and the last word carries a checksum, so most typing mistakes are caught when you restore.</p>
+        <h3>One phrase, many coins</h3>
+        <p>Open standards describe how a whole tree of keys can grow from one phrase, with a separate branch for each blockchain. That is why a single backup brings back Bitcoin, Ethereum, XRP, Zcash and the rest together, and why the same words can often be restored in other wallets that follow the same standards.</p>
+        <ul><li>Coins such as Bitcoin can use a fresh address for each payment; all of them belong to the same phrase.</li><li>Restoring recreates the keys. The money itself never left the blockchains, so it is all still there.</li></ul>
+        <h3>What a backup can't do</h3>
+        <p>No standard lets anyone reset a lost phrase. Without the words, nobody can rebuild the keys, and a wiped phone cannot reach the money again.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Entropy</h3>
+        <p>A wallet begins with randomness. A 12-word phrase encodes 128 random bits plus a 4-bit checksum taken from a hash of those bits: 132 bits in total, split into twelve 11-bit numbers, each picking one word from a list of 2,048 (2^11).</p>
+        <pre><code>2^128 ≈ 3.4 × 10^38 possible phrases</code></pre>
+        <p>That number is far beyond what any computer could search by guessing, which is why a phrase never shown to anyone is safe, and why one that has been seen is not.</p>
+        <h3>From words to a seed</h3>
+        <p>The words are fed through a key-stretching function: a hash-based function repeated thousands of times. The output is a 512-bit seed. Stretching makes each guess slow and costly for an attacker, while costing one user almost nothing.</p>
+        <h3>Hierarchical deterministic keys</h3>
+        <p>From the seed, a one-way function produces a master key and then child keys, level by level, like branches of a tree. Each child is computed from its parent and an index number, so the same seed always rebuilds the same tree, while knowing one branch reveals nothing about its parent or siblings.</p>
+        <h3>Public-key cryptography</h3>
+        <p>Each private key is a secret number. Multiplying a fixed point on an elliptic curve by that number gives the public key; addresses are derived from public keys. Going forwards is easy, but going backwards, recovering the number from the point, is the elliptic-curve discrete logarithm problem, believed infeasible for today's computers.</p>
+        <pre><code>public key = private key × G</code></pre>
+        <p>A digital signature proves knowledge of the private key for one specific message without revealing the key, and anyone holding the public key can verify it. That is all a blockchain needs to decide whether a payment is valid.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        
+        <a class="next" href="/guides/send-receive.html"><small>Next</small>Sending and receiving</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swapping coins · Kalda Wallet</title>
+  <meta name="description" content="Swap one coin for another without an exchange account.">
+  <meta property="og:title" content="Swapping coins · Kalda Wallet">
+  <meta property="og:description" content="Swap one coin for another without an exchange account.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/swaps.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>Swapping coins</h1>
+      <p class="lead">Swap one coin for another without an exchange account.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Swapping means trading one coin for another, for example Bitcoin for Ethereum. Open the Swap tab: there's no account to open, and the swap goes straight from your wallet to your wallet.</p>
+        <p>Pick the coin you have, the coin you want and an amount (or tap Max). You'll see roughly how much you'll get and the fees before you confirm with your fingerprint, face or PIN.</p>
+        <p>The light at the top is green when the pair can be traded now, and red when the network has paused one of the coins.</p>
+        <p>Most swaps take a few minutes, longer for Bitcoin-family coins. Follow their progress on the History tab. If a swap can't be completed, your coins come back to you, minus fees.</p>
+        <p>Part of the cost is fixed, so very small swaps lose a bigger share to fees. If the fees are high, you'll be warned before anything is sent.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>The swap network</h3>
+        <p>Swaps run through a decentralised cross-chain liquidity network. It holds pools of real coins on each blockchain it supports, secured by independent node operators, and trades between them without you ever opening an account.</p>
+        <h3>How a swap happens</h3>
+        <p>You send your coin to the network's address on that chain, with a short instruction attached saying which coin you want and where to send it. The network sees the deposit, swaps it through its pools, and pays the new coin out to your own address on the other chain.</p>
+        <h3>Quotes are estimates</h3>
+        <p>A quote shows the expected amount out and the fees at that moment. Prices in the pools move with every trade, so what arrives can be a little different. Quotes also expire after a short while, because the network rotates the addresses it receives on.</p>
+        <h3>What you pay</h3>
+        <ul><li>The normal network fee for sending your coin.</li><li>The network's fees: a liquidity fee that grows with the size of your trade relative to the pool, and an outbound fee for paying you on the other chain.</li><li>On most swaps, a small Kalda fee, included in the quote you see.</li></ul>
+        <h3>Pauses and refunds</h3>
+        <p>Node operators can pause trading on a chain, for example during an upgrade or an incident; the swap screen then says the swap isn't available right now. If the network can't complete a swap, its rules send the original coin back to where it came from, minus fees. A sister network built the same way covers some coins the main one doesn't, such as Cardano.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Automated market makers</h3>
+        <p>A traditional exchange matches buyers with sellers in an order book. An automated market maker instead holds two assets in a pool and sets the price by a formula. The best-known is the constant-product rule: the product of the two reserves stays the same across a trade.</p>
+        <pre><code>x × y = k</code></pre>
+        <p>If a pool holds x of one coin and y of another, adding Δx of the first returns Δy of the second such that (x + Δx)(y − Δy) = k. The bigger your trade relative to the pool, the further the price moves against you: this is slippage, or price impact.</p>
+        <h3>Continuous liquidity pools</h3>
+        <p>Some cross-chain networks use a variant where the fee itself grows with the trade's size relative to the pool depth, so large trades pay proportionally more and pools are protected from being drained cheaply. Pairing every asset with one settlement asset lets any coin be swapped for any other in two hops.</p>
+        <h3>Arbitrage keeps prices honest</h3>
+        <p>Pool prices only know what traders do to them. When a pool drifts away from the wider market, arbitrageurs buy the cheap side and sell the dear side until the gap closes. This is what keeps an automated pool roughly in line with prices elsewhere.</p>
+        <h3>Threshold signatures and vaults</h3>
+        <p>A cross-chain network must hold real coins on blockchains that know nothing about it. Threshold signature schemes let a group of nodes jointly control one address so that a large enough subset must cooperate to sign, while no single node ever holds the full private key. Rotating the group regularly limits the damage if some members misbehave.</p>
+        <h3>Observing other chains</h3>
+        <p>The network's validators each watch the external blockchains and vote on what they see. Only once enough of them agree that a deposit happened is it acted on, which is why swaps from slower chains wait for confirmations first.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/contacts-link-up.html"><small>Previous</small>Contacts and Link Up</a>
+        <a class="next" href="/guides/swap-flow.html"><small>Next</small>The chart on a swap</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

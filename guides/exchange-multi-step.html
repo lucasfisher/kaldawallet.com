@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swaps in more than one step · Kalda Wallet</title>
+  <meta name="description" content="Why a swap through other coins isn't guaranteed, and how padding helps.">
+  <meta property="og:title" content="Swaps in more than one step · Kalda Wallet">
+  <meta property="og:description" content="Why a swap through other coins isn't guaranteed, and how padding helps.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/exchange-multi-step.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Exchanges</div>
+      <h1>Swaps in more than one step</h1>
+      <p class="lead">Why a swap through other coins isn't guaranteed, and how padding helps.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Some coins can't be swapped straight into each other. Then the swap goes through a coin in between: for example USDC into DOGE, then DOGE into BNB.</p>
+        <p>Each step is its own trade, made a few minutes after the one before. Prices keep moving in between, so the last step can cost more than it did when you checked.</p>
+        <p>If it costs too much, that step stops. Nothing is lost: the coin in between stays in your wallet, and you can finish the swap later.</p>
+        <h3>Padding</h3>
+        <p>Padding gives the later steps room for the price to move. Each step of padding adds 0.5%.</p>
+        <ul><li>Paying someone a set amount, padding buys a little more of the coin in between. They still get exactly what you typed, and what isn't needed stays in your wallet.</li><li>Swapping for yourself, padding lets the later steps accept a slightly worse price instead of stopping.</li></ul>
+        <p>More padding makes the swap more likely to finish. It can't make it certain: a big enough price move, or a network that pauses, can still stop a step.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Why there's no direct swap</h3>
+        <p>Each exchange network only trades the coins it holds pools or market makers for. When no single network trades both coins, the swap goes through a coin that two of them share, and each step is a separate trade on its own network.</p>
+        <h3>Why a later step can stop</h3>
+        <p>A step only starts once the coin from the step before has arrived, which can take minutes. The price for the next step is fixed only when that step is sent, and the exchange then pays out only if it can still meet the least the step was allowed to pay. If the market moved past that, the exchange refunds the step instead of filling it at a worse price.</p>
+        <h3>What padding changes</h3>
+        <p>Padding widens that allowance. When the last step pays a set amount to someone, it buys more of the coin in between up front, so the last step can still afford that amount after a move. When it doesn't, it lowers the least each later step will accept.</p>
+        <p>Neither changes what the exchanges do. They are still independent trades that can each fail, which is why a multi-step swap is never guaranteed.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Sequential execution risk</h3>
+        <p>A route of n trades executed one after another is exposed to price movement over the whole time between the first quote and the last fill. With each step's price roughly a random walk, the spread of outcomes grows with the square root of that time, so a route whose steps take minutes each carries noticeably more risk than one trade.</p>
+        <h3>Slippage limits as a guarantee</h3>
+        <p>Each step carries a minimum output. The exchange fills the step only if it can deliver at least that, and refunds the input otherwise. That makes every step all-or-nothing on its own, but it makes the route as a whole conditional: the probability that it finishes is the product of each step's probability of clearing its limit.</p>
+        <h3>The effect of padding</h3>
+        <p>Loosening a step's limit by a fraction p raises the chance that it clears. Overbuying the intermediate asset by p, when the final output is fixed, does the same from the other side: the final step needs less than it holds. Either way the gain shows up in the tail, against moves larger than the limit would otherwise allow, and it never reaches certainty, because the size of a move is unbounded.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/exchange-uniswap.html"><small>Previous</small>Uniswap</a>
+        <a class="next" href="/guides/secret-sharing.html"><small>Next</small>Recovery shares from friends and family</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

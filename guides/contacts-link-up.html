@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacts and Link Up · Kalda Wallet</title>
+  <meta name="description" content="Swap addresses safely with people, in person or by message.">
+  <meta property="og:title" content="Contacts and Link Up · Kalda Wallet">
+  <meta property="og:description" content="Swap addresses safely with people, in person or by message.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/contacts-link-up.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › The basics</div>
+      <h1>Contacts and Link Up</h1>
+      <p class="lead">Swap addresses safely with people, in person or by message.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Contacts are the people you pay. Once someone is saved, you can pay them without ever typing their long address. Find them on the Contacts tab.</p>
+        <p>The easiest way to add someone is Link Up: on Contacts, both tap Link Up while standing near each other, then tap each other's name. Your phones swap details over Bluetooth, locked so nobody nearby can read them.</p>
+        <p>Both phones then show a six-digit code. Check the codes match before you save. If they do, the addresses came straight from your friend's phone, and the contact is marked “Verified in person”.</p>
+        <p>Far apart? Use Share my contact to send a locked contact card by email or message, and tell your friend the password a different way, such as a phone call.</p>
+        <p>You choose which coins' addresses to share. Contacts never get your recovery phrase, your balances or any way to spend your money.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Bluetooth Low Energy</h3>
+        <p>Link Up uses Bluetooth Low Energy, the short-range radio standard built into every modern phone. Phones nearby can announce themselves and connect directly, with no internet, no server and no account in between.</p>
+        <h3>Encryption without a shared password</h3>
+        <p>The two phones agree on a secret key over the air using public-key key agreement, a standard technique: someone listening to the radio sees everything that's sent, yet still can't work out the key. Each phone's details are then encrypted with that key.</p>
+        <h3>Why the code matters</h3>
+        <p>Key agreement alone can't tell you who is on the other end. An attacker sitting in the middle could agree one key with you and another with your friend. The six-digit code is drawn from the agreed key, so if anyone is in the middle, the codes on the two phones differ. Comparing them face to face closes that gap.</p>
+        <h3>Signed contact cards</h3>
+        <p>A contact card is locked with a password you choose and signed with a key that belongs to your wallet. Your friend's phone can check the signature, so a card that was changed on the way is caught, and a later card from you updates your contact instead of creating a stranger.</p>
+        <h3>Private and public addresses</h3>
+        <ul><li>On Bitcoin-style coins and Monero, each person you share with can get an address of their own, so two contacts comparing notes can't link your payments.</li><li>On account-based networks such as Ethereum, XRP or Solana, an address is public: anyone who has it can look up its full history and balance. Share those only when you need to.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>The key-exchange problem</h3>
+        <p>Two strangers want a shared secret, but every message between them can be overheard. Diffie–Hellman key agreement solves this: each side picks a secret number, publishes a value derived from it, and combines its own secret with the other's public value. Both arrive at the same result; an eavesdropper, holding only the public values, cannot.</p>
+        <pre><code>shared = a × (b × G) = b × (a × G)</code></pre>
+        <p>Modern systems do this on an elliptic curve, where a × G is easy to compute but recovering a from it is infeasible.</p>
+        <h3>Man-in-the-middle attacks</h3>
+        <p>Diffie–Hellman proves you share a key with someone, not with whom. An active attacker can run two separate exchanges, relaying and reading everything. The defence is authentication: confirming, over a channel the attacker can't fake, that both sides hold the same key.</p>
+        <h3>Short authentication strings</h3>
+        <p>One elegant form of authentication is a short code derived from the shared key, read by two people standing side by side. A middle attacker holds two different keys, so the two codes match only by chance: about one in a million for six digits. The human eye becomes the trusted channel.</p>
+        <h3>Authenticated encryption</h3>
+        <p>Once a key is agreed, data is sealed with an authenticated cipher, which both hides the content and attaches a tag computed from it. Any change in transit makes the tag check fail, and the message is rejected rather than misread.</p>
+        <h3>Password-based encryption and signatures</h3>
+        <p>A password is too weak to be a key directly, so it is first run through a deliberately slow, memory-hungry stretching function that makes every guess expensive. A digital signature then proves who made the content: only the holder of the private key can produce it, and anyone with the public key can check it.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/send-receive.html"><small>Previous</small>Sending and receiving</a>
+        <a class="next" href="/guides/swaps.html"><small>Next</small>Swapping coins</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

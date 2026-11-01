@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private Zcash (shielded balance) · Kalda Wallet</title>
+  <meta name="description" content="Keep ZEC payments private: amounts, senders and notes hidden.">
+  <meta property="og:title" content="Private Zcash (shielded balance) · Kalda Wallet">
+  <meta property="og:description" content="Keep ZEC payments private: amounts, senders and notes hidden.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/shielded-zcash.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Privacy</div>
+      <h1>Private Zcash (shielded balance)</h1>
+      <p class="lead">Keep ZEC payments private: amounts, senders and notes hidden.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Zcash (ZEC) can be held in two ways. Public ZEC is like a shop window: anyone can see how much is there and where it goes. Private ZEC, called shielded, is like a sealed envelope: the amount, who sent it and any note inside stay hidden from everyone else.</p>
+        <p>On the ZEC page, flip the ZEC card to its private side to see your shielded balance. Whichever side is showing decides what Send and Receive do, so you can pay and get paid privately. After you open the app, the private balance can take a moment to catch up.</p>
+        <p>Shield ZEC moves your public ZEC into your private balance; Unshield ZEC moves some back to the public side. Exchanges usually only pay public addresses, so give them your public ZEC address.</p>
+        <p>Tip: moving ZEC between the two sides can be seen publicly. Leave some time between moves and avoid shielding and unshielding the exact same amount, so nobody can match them up.</p>
+        <p>Every account type is private: Kalda uses your private ZEC on its own. The card's private side shows with the Developer account type.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Two pools in one coin</h3>
+        <p>Zcash is a public blockchain with two kinds of value. Transparent ZEC (addresses starting t1) works like Bitcoin: amounts and addresses are public. Shielded ZEC lives in shielded pools, where the network verifies every payment without seeing the amount, the sender or the recipient.</p>
+        <ul><li>Sapling (2018) was the first widely used shielded pool; its addresses start with zs1.
+• Orchard (2022) removed the need for a trusted setup.
+• Ironwood, introduced by the NU6.3 network upgrade in 2026, is the pool that receives new shielded value; Orchard notes can still be spent out.</li></ul>
+        <h3>Unified addresses</h3>
+        <p>A unified address (it starts with u1, defined in ZIP 316) bundles several receivers into one string. A paying wallet must use the most private receiver it supports, so wallets that handle shielded payments pay you privately.</p>
+        <p>Every shielded payment can carry an encrypted note (a memo) of up to 512 bytes that only the recipient can read. Fees follow ZIP 317, Zcash's published fee rule: a typical shielded payment costs 0.0001 ZEC, a little more when it combines many smaller amounts.</p>
+        <h3>Light-wallet servers</h3>
+        <p>A phone can't hold the whole Zcash blockchain, so light wallets download compact blocks from a light-wallet server (lightwalletd is open source, and anyone can run one). The wallet recognises its own payments on the device; the server never gets the keys, though like any server it sees the connecting IP address.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Commitments instead of balances</h3>
+        <p>A shielded pool doesn't record who owns what. Each payment creates notes: small records of a value, an owner and some randomness. Only a commitment to each note is published, a cryptographic fingerprint that binds the note's contents without revealing them. All commitments are collected in an append-only Merkle tree, whose root summarises every note ever created.</p>
+        <h3>Nullifiers stop double spending</h3>
+        <p>Spending a note publishes its nullifier, a value derived from the note and the owner's secret key. Anyone can check that a nullifier has never appeared before, yet nobody can tell which commitment it belongs to. The same note always gives the same nullifier, so it can't be spent twice.</p>
+        <h3>Zero-knowledge proofs</h3>
+        <p>Each spend carries a zk-SNARK: a short proof that the spender knows a note in the tree, holds its key, computed the nullifier correctly, and that inputs equal outputs plus the fee, all without revealing any of those values. Sapling uses Groth16 proofs on the BLS12-381 curve, which needed a one-time trusted-setup ceremony; Orchard-style pools use Halo 2 on the Pallas and Vesta curves, which needs none.</p>
+        <h3>Finding your payments</h3>
+        <p>Each note is encrypted to its recipient with elliptic-curve Diffie–Hellman key agreement: the sender combines a fresh random key with the recipient's address to reach a shared secret that only the recipient can also compute. A wallet tries to decrypt every new shielded output with its incoming viewing key, and only its own succeed. This is called trial decryption.</p>
+        <h3>What stays visible</h3>
+        <p>Moving value between the transparent and shielded sides is public on the transparent side, so matching amounts and timing can link the two moves. Inside the pool, privacy grows with the anonymity set: the more people use shielded payments, the harder any one note is to trace.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/security.html"><small>Previous</small>Keeping your wallet safe</a>
+        <a class="next" href="/guides/stealth-addresses.html"><small>Next</small>Private ETH, BNB and AVAX (stealth addresses)</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

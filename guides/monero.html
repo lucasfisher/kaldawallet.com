@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monero · Kalda Wallet</title>
+  <meta name="description" content="A coin that is private by default, and why its balance can take a moment.">
+  <meta property="og:title" content="Monero · Kalda Wallet">
+  <meta property="og:description" content="A coin that is private by default, and why its balance can take a moment.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/monero.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Privacy</div>
+      <h1>Monero</h1>
+      <p class="lead">A coin that is private by default, and why its balance can take a moment.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Monero (XMR) is private by default. Nobody looking at its network can see your balance, who paid you or how much.</p>
+        <p>Because everything is hidden, your phone has to look through the network itself to find your money. That's why the Monero balance can take a while to catch up, especially the first time. The Monero page shows how far it has got.</p>
+        <p>A new payment appears a couple of minutes after it's sent and can be spent about 20 minutes later; that wait is a Monero network rule.</p>
+        <ul><li>Speed up scanning, on the Monero page, catches up faster but uses more data and battery.
+• While your Monero balance is zero, Skip the history lets you watch only for new payments. Anything sent to you before then won't show.</li></ul>
+        <p>Each contact you share with gets their own Monero subaddress, and Receive → New address makes another whenever you like.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Private by design</h3>
+        <p>Monero hides all three parts of a payment at the protocol level, from everyone:
+• the recipient, with one-time stealth addresses;
+• the sender, with ring signatures that mix each spent coin among decoys from the blockchain (16 members per ring under current rules);
+• the amount, with RingCT confidential transactions.</p>
+        <h3>Two keys</h3>
+        <p>A Monero wallet has a private view key, which recognises incoming payments and reads their amounts, and a private spend key, which is needed to spend and to tell when your coins have been spent. Addresses are built from the two matching public keys; main addresses start with 4 and subaddresses with 8.</p>
+        <h3>Nodes</h3>
+        <p>Because nothing is readable from outside, a wallet can't just look up a balance: it downloads blocks from a Monero node (anyone can run one, and many are public) and tests each output with its view key. A remote node never learns which outputs are yours, but it does see your IP address and when you broadcast a transaction.</p>
+        <h3>Timing</h3>
+        <p>Monero adds a block roughly each 2 minutes, and new outputs can't be spent until 10 blocks have passed, about 20 minutes. View tags, added in the 2022 network upgrade, let wallets skip most other people's outputs after one quick check.</p>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Curve and keys</h3>
+        <p>Monero works on the Ed25519 curve (a twisted Edwards form of Curve25519) with base point G and group order l. A wallet has a private view key a and a private spend key b, with public keys A = a·G and B = b·G.</p>
+        <h3>One-time addresses</h3>
+        <p>To pay (A, B), the sender picks a random r, publishes R = r·G, and for output number i creates the one-time key:</p>
+        <pre><code>P = Hs(8·r·A ‖ i)·G + B</code></pre>
+        <p>The recipient computes 8·a·R, which equals 8·r·A, and checks whether P − Hs(8·a·R ‖ i)·G equals B, so the view key alone finds payments. Spending needs P's private key x = Hs(8·a·R ‖ i) + b, which requires the spend key. Hs hashes to a scalar; the factor 8 clears the curve's small cofactor.</p>
+        <h3>Ring signatures and key images</h3>
+        <p>A spend is signed with a ring of outputs, the real one plus decoys, using CLSAG, a linkable ring signature: it proves the signer owns one member without saying which. Each spend also reveals a key image I = x·Hp(P), unique to the output; the network rejects any key image it has seen before, which stops double spends without revealing which output was spent. Decoys are drawn to mimic how old real spent outputs tend to be, following a gamma distribution.</p>
+        <h3>Hidden amounts</h3>
+        <p>Amounts are Pedersen commitments C = y·G + v·H, where v is the amount and y a random blinding factor. Commitments add up, so the network checks that inputs equal outputs plus the fee without seeing any amount, while Bulletproofs+ range proofs show each amount is non-negative and in range, so nobody can create money out of negative values.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/secret-messages.html"><small>Previous</small>Secret messages</a>
+        <a class="next" href="/guides/xrp-rlusd.html"><small>Next</small>XRP and RLUSD</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

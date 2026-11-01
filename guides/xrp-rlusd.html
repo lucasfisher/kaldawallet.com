@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XRP and RLUSD · Kalda Wallet</title>
+  <meta name="description" content="How an XRP wallet works, the 1 XRP that stays in it, and Ripple's digital dollar.">
+  <meta property="og:title" content="XRP and RLUSD · Kalda Wallet">
+  <meta property="og:description" content="How an XRP wallet works, the 1 XRP that stays in it, and Ripple's digital dollar.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/xrp-rlusd.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › XRP</div>
+      <h1>XRP and RLUSD</h1>
+      <p class="lead">How an XRP wallet works, the 1 XRP that stays in it, and Ripple's digital dollar.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>XRP is the coin of the XRP Ledger. An XRP wallet is like a bank account that has to be opened before use: it opens when it first receives at least 1 XRP, and that 1 XRP stays in it as a deposit you can't spend.</p>
+        <p>RLUSD is a digital US dollar from Ripple, kept at the same address as your XRP. On the XRP page, flip the balance card to see it; Send, Receive and Convert follow the side that's showing. Switching RLUSD on sets aside another 0.2 XRP, and your first change into RLUSD switches it on for you.</p>
+        <p>Convert changes XRP into RLUSD, or back. Before you confirm, you see what you should get and the least you'll accept. If the price moves too far, the change simply doesn't happen, and only a tiny network fee is spent.</p>
+        <p>Paying an exchange? It may give you a destination tag: a number, like the reference on a bank transfer, that tells it the money is yours. Always include it when it's asked for.</p>
+        <p>Want the 1 XRP deposit back? At the Expert level, XRP tools → Delete my XRP wallet sends everything to another XRP account. The network keeps 0.2 XRP as its fee.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>Accounts and reserves</h3>
+        <p>An XRP Ledger account comes into existence when it receives at least the base reserve, 1 XRP today. Each object the account owns on the ledger (a trust line, an escrow, a signer list, an open offer) holds a further owner reserve, 0.2 XRP today. Reserves keep the shared ledger small and discourage spam. The network's validators can vote to change them, and what you can spend is your balance minus what's reserved.</p>
+        <h3>Tokens and trust lines</h3>
+        <p>Besides XRP, the ledger carries tokens issued by companies. To hold one, an account opens a trust line to its issuer: a ledger entry saying it accepts that issuer's token. RLUSD is a US-dollar stablecoin issued by Ripple this way. Anyone you pay RLUSD to needs their own RLUSD trust line, and an empty trust line can be removed to free its reserve. The ledger gives regulated issuers freeze and clawback powers, so, like any regulated stablecoin, RLUSD can be frozen or taken back by its issuer.</p>
+        <h3>The built-in exchange</h3>
+        <p>The XRP Ledger has its own decentralised exchange: an order book where anyone can place offers, alongside automated market maker (AMM) pools. One trade can draw on both at once, and it settles inside a single ledger with no middleman holding your funds. A trade can carry a limit and be marked “fill now or cancel”, so it either happens at that rate or better, or not at all. Pool trading fees are built into the price.</p>
+        <ul><li>Destination tags: a number attached to a payment so that a shared address, such as an exchange's, knows which customer it's for.</li><li>Closing an account: an account can be deleted, sending its whole balance to another active account. The network destroys one owner reserve (0.2 XRP) as the fee, so most of the base reserve comes back. Token balances and open escrows must be settled first, and the address can be opened again later by a new payment of 1 XRP or more.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Keys and addresses</h3>
+        <p>Every XRP Ledger account is controlled by a key pair on an elliptic curve (secp256k1, the curve Bitcoin uses, or Ed25519). Signing a transaction with the private key produces a signature anyone can check with the public key, but nobody can forge without the private key. The address is a hash of the public key, written with a checksum so that typing mistakes are caught.</p>
+        <h3>Consensus and finality</h3>
+        <p>There is no mining. Validators each propose the set of transactions they have seen and, over a few rounds of voting, converge on one set. When at least 80% of a validator's trusted list agree, the ledger closes, typically every 3 to 5 seconds. A validated ledger is final: unlike proof-of-work chains, where a block only grows safer as more blocks pile on top of it, there is nothing to reorganise.</p>
+        <h3>The account model</h3>
+        <p>The ledger keeps balances per account rather than as unspent coins (the UTXO model used by Bitcoin). Each account has a sequence number that rises with every transaction it sends, so a signed transaction can never be replayed. Fees are tiny and are destroyed rather than paid to anyone, which slowly reduces the supply of XRP. When the network is busy, the minimum fee rises for a while: a simple fee market that makes flooding expensive.</p>
+        <h3>Automated market makers</h3>
+        <p>An AMM pool holds two assets in amounts x and y and prices every trade so that their product stays constant. Paying in an amount a, with a trading fee f, returns:</p>
+        <pre><code>x · y = k        out = y − k / (x + a · (1 − f))</code></pre>
+        <p>The larger a trade is relative to the pool, the further the price moves against it (slippage). An order book instead matches separate offers at stated prices. A limit order sets the worst acceptable rate, so slippage beyond it simply means no trade.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/monero.html"><small>Previous</small>Monero</a>
+        <a class="next" href="/guides/xrp-locks.html"><small>Next</small>Locks and scheduled payments</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

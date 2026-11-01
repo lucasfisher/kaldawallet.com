@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Uniswap · Kalda Wallet</title>
+  <meta name="description" content="Trades Ethereum and its tokens on Ethereum itself, in one transaction.">
+  <meta property="og:title" content="Uniswap · Kalda Wallet">
+  <meta property="og:description" content="Trades Ethereum and its tokens on Ethereum itself, in one transaction.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/exchange-uniswap.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › Exchanges</div>
+      <h1>Uniswap</h1>
+      <p class="lead">Trades Ethereum and its tokens on Ethereum itself, in one transaction.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Uniswap trades Ethereum and the tokens built on it — and only those. It isn't a cross-chain network: everything happens on Ethereum, which is what makes it different from the others.</p>
+        <p>It is a program running on Ethereum rather than a company. Anybody can put two coins into a pool and earn a share of the fees from people trading against it, and anybody can trade against it.</p>
+        <h3>What it means for you</h3>
+        <p>A swap through it is a single Ethereum transaction. There is no waiting for a deposit to be noticed by anyone, so it either works within a block or two, or it fails and you keep your coins — minus the Ethereum fee for trying.</p>
+        <p>Because it all happens in one transaction, the amount you receive is guaranteed before it goes through. If the price moved enough that you'd get less than you agreed to, the transaction simply doesn't happen.</p>
+        <p>What it costs depends mostly on how busy Ethereum is at that moment, not on the size of your trade. That makes it good value for larger swaps and poor value for very small ones.</p>
+        <p>The first time you trade a particular token, there's an extra step to give permission to move it. It costs a small Ethereum fee of its own.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <h3>An exchange that is a program</h3>
+        <p>There is no operator and no deposit. A pool is a contract holding two tokens; a trade is a call to it that takes some of one and leaves some of the other, priced by a formula that depends only on what the pool currently holds. Anyone can create a pool for any pair, so the catalogue is permissionless and the quality varies enormously.</p>
+        <h3>Atomic settlement</h3>
+        <p>The whole swap — possibly across several pools — succeeds or fails as a unit, inside one transaction. This is the central advantage over any cross-chain design: there is no window in which you hold a half-finished trade, and the minimum output you specify is enforced by the contract itself rather than promised.</p>
+        <h3>Fee tiers and depth</h3>
+        <p>The same pair can have several pools with different fee levels. A stable pair can be served well by a very low fee, while a volatile pair needs a higher one to pay the people providing liquidity for the risk they take. A router picks a path across pools; the headline rate alone doesn't say which is cheapest, because a lower fee on a thin pool can cost more in price impact than a higher fee on a deep one.</p>
+        <h3>Approvals</h3>
+        <p>Moving an existing token requires giving a contract permission to do so first, which is a separate transaction. It is worth knowing this is an allowance rather than a one-off: it stays until changed, which is both a convenience and something worth keeping an eye on.</p>
+        <h3>What a swap costs</h3>
+        <ul><li>Ethereum's own fee for the transaction, which dominates for small trades.</li><li>The pool's fee, a fixed share of the amount traded.</li><li>Price impact, which depends on your size against the pool's depth.</li><li>A separate Ethereum fee for an approval, when one is needed.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Constant product and its descendants</h3>
+        <p>The original rule keeps the product of reserves fixed across a trade:</p>
+        <pre><code>x · y = k</code></pre>
+        <p>An input Δx returns Δy = y·Δx/(x+Δx) before fees. The marginal price is y/x and the realised price is always worse, with the gap growing as Δx/x — this is price impact, and it is a property of the formula, not a charge by anyone. Liquidity under this rule is spread over every price from zero to infinity, most of which will never trade, so capital efficiency is poor.</p>
+        <h3>Concentrated liquidity</h3>
+        <p>Later designs let a provider choose a price range and supply liquidity only inside it, behaving within that range like a constant-product pool holding much larger virtual reserves. Capital efficiency improves by orders of magnitude for a pair that stays in range, and the provider is left holding only one of the two assets when it leaves. Aggregate depth therefore becomes a function of price — a pool can be very deep at the current price and thin a few percent away, which is invisible in any single quoted rate.</p>
+        <h3>Impermanent loss as a cost of providing</h3>
+        <p>A provider's holding is rebalanced continuously against the market by the traders themselves, so it ends up with more of whichever asset fell. Against simply holding the two assets, the shortfall for a constant-product pool at a price ratio r is</p>
+        <pre><code>1 − 2·√r / (1 + r)</code></pre>
+        <p>which is zero when the price returns and grows either side of it. Fee income has to exceed this for providing to be worthwhile, which is why fee tiers track volatility.</p>
+        <h3>Ordering and extractable value</h3>
+        <p>Because trades settle in a public ordered sequence, whoever decides the order can profit from knowing a trade before it executes: placing one in front and one behind it captures the price it moves. The minimum-output bound is the user's defence, and it converts a worse price into a failed transaction rather than preventing the extraction. Private transaction routing avoids the public queue, at the cost of relying on whoever carries it to include it at all — a dropped transaction is the characteristic failure of that approach, and the reason it must be detected rather than waited on indefinitely.</p>
+        <h3>Path selection</h3>
+        <p>Finding the best execution is an optimisation over paths and splits, not a lookup: a large trade may be best served split across several pools and several hops, since impact is superlinear in size within each. The comparison that matters is always the output after all fees and impact, which is why two routers quoting the same pair can honestly differ.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/exchange-near-intents.html"><small>Previous</small>NEAR Intents</a>
+        <a class="next" href="/guides/exchange-multi-step.html"><small>Next</small>Swaps in more than one step</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>

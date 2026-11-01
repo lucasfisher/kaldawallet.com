@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gas, and how to pay less for it · Kalda Wallet</title>
+  <meta name="description" content="Why your dollars need a little gas to move, and how to keep that cost low.">
+  <meta property="og:title" content="Gas, and how to pay less for it · Kalda Wallet">
+  <meta property="og:description" content="Why your dollars need a little gas to move, and how to keep that cost low.">
+  <meta property="og:image" content="https://kaldawallet.com/assets/kalda-logo-512.png">
+  <meta property="og:url" content="https://kaldawallet.com/guides/gas-saving.html">
+  <meta name="theme-color" content="#0B0E14">
+  <link rel="icon" type="image/svg+xml" href="/assets/kalda-logo.svg">
+  <link rel="icon" type="image/png" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/" aria-label="Kalda home">
+      <img src="/assets/kalda-logo.svg" alt="">
+      Kalda
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+      <a class="btn btn-primary" href="/#download">Get Kalda</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Main">
+    <a href="/guides/" aria-current="page">Guides</a>
+      <a href="/coins.html">Coins</a>
+      <a href="/#accounts">Accounts</a>
+      <a href="/#faq">FAQ</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="/guides/">Guides</a> › More</div>
+      <h1>Gas, and how to pay less for it</h1>
+      <p class="lead">Why your dollars need a little gas to move, and how to keep that cost low.</p>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="wrap article">
+      <div class="tabs" role="tablist" hidden>
+        <button role="tab" data-level="simple" aria-selected="true">Simple</button>
+        <button role="tab" data-level="detailed" aria-selected="false">Detailed</button>
+        <button role="tab" data-level="complex" aria-selected="false">In depth</button>
+      </div>
+      <section class="level" id="simple" role="tabpanel" aria-label="Simple">
+        <h2>Simple</h2>
+        <p>Digital dollars such as USDC and USDT live on networks like Ethereum, Polygon and BNB Chain. To move them, the network charges a small fee called gas, and it has to be paid in that network's own coin: ETH on Ethereum, POL on Polygon, BNB on BNB Chain.</p>
+        <p>So holding dollars isn't quite enough: each place your dollars sit needs a little gas before they can move.</p>
+        <h3>How to pay less</h3>
+        <ul><li>Buy gas once, not every time. Every purchase has its own small cost, so buying enough for several payments at once is cheaper than buying a tiny bit before each one.</li><li>Keep your dollars on the cheaper networks. Moving dollars on Polygon or BNB Chain usually costs a fraction of a cent. On Ethereum it can cost much more, especially when the network is busy.</li><li>Fewer, bigger payments cost less than many small ones, since each payment pays its own gas whatever the amount.</li><li>When someone pays you, ask them to use a cheap network if they can.</li></ul>
+        <p>Gas goes to the network that carries your payment, not to Kalda.</p>
+      </section>
+      <section class="level" id="detailed" role="tabpanel" aria-label="Detailed">
+        <h2>Detailed</h2>
+        <p>USDC and USDT are tokens: entries kept by a program (a smart contract) on each network. Moving a token means asking that program to update its records, and every network charges for the work in its own coin, known as gas.</p>
+        <ul><li>Ethereum: gas is paid in ETH. Its price follows demand and can rise sharply when the network is busy.</li><li>Polygon: gas is paid in POL, usually a tiny fraction of a cent per transfer.</li><li>BNB Chain: gas is paid in BNB, usually under a cent per transfer.</li><li>Solana: fees are paid in SOL and are tiny, but receiving a token for the first time needs a small deposit (rent) for the account that holds it.</li></ul>
+        <h3>Private addresses</h3>
+        <p>When you're paid privately, each payment arrives at a brand-new one-time address (the ERC-5564 standard for stealth addresses). That keeps payments from being linked together, but each of those addresses needs its own gas before its dollars can move.</p>
+        <h3>Ways to save</h3>
+        <ul><li>Buy gas in one go and share it out, rather than in many small purchases: every purchase and every transfer has its own fixed cost.</li><li>Hold and receive dollars on Polygon or BNB Chain when you can; the same dollars cost far less to move there than on Ethereum.</li><li>Swapping dollars from one network to another costs a little too, so it's best to keep them where moving them is cheapest.</li></ul>
+      </section>
+      <section class="level" id="complex" role="tabpanel" aria-label="In depth">
+        <h2>In depth</h2>
+        <h3>Gas as a unit of work</h3>
+        <p>On Ethereum-style networks every operation has a fixed cost in gas units, and the fee is those units times the price per unit at the time. A token transfer calls the token contract's transfer function, which updates two balances in storage and emits an event; that costs a few tens of thousands of gas units whatever the amount moved.</p>
+        <pre><code>fee = gas used × (base fee + priority fee)</code></pre>
+        <h3>Why networks differ</h3>
+        <p>Ethereum's base fee is set by an EIP-1559 fee market: it rises when blocks are full and falls when they aren't, so the same transfer can cost a few cents one hour and much more the next. Polygon and BNB Chain run the same virtual machine with more block space and cheaper native coins, so the same transfer costs far less.</p>
+        <h3>Who pays</h3>
+        <p>A transaction must be signed by the account it spends from, and that account pays the fee from its own native balance. A token-only account therefore can't move anything until some native coin reaches it. Account abstraction (ERC-4337) lets a separate party, a paymaster, pay the fee instead; without it, the account itself must hold gas.</p>
+        <h3>Private addresses and batching</h3>
+        <p>Stealth addresses (ERC-5564) give every payment a fresh account derived from the recipient's published keys. Each such account is independent on-chain, so each must be funded with gas before it can spend. Since every transaction carries a fixed base cost (21,000 gas for a plain transfer), funding many addresses in one purchase and spreading it out costs less than a separate purchase for each.</p>
+      </section>
+      <nav class="pager" aria-label="More guides">
+        <a href="/guides/network-fees.html"><small>Previous</small>Network fees</a>
+        <a class="next" href="/guides/staking.html"><small>Next</small>Staking and earning interest</a>
+      </nav>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var tabs = document.querySelector(".tabs"), buttons = tabs.querySelectorAll("button");
+      var levels = document.querySelectorAll(".level");
+      function show(key) {
+        buttons.forEach(function (b) { b.setAttribute("aria-selected", String(b.dataset.level === key)); });
+        levels.forEach(function (l) { l.hidden = l.id !== key; });
+        try { localStorage.setItem("kalda.guideLevel", key); } catch (e) {}
+      }
+      var saved = null;
+      try { saved = localStorage.getItem("kalda.guideLevel"); } catch (e) {}
+      tabs.hidden = false;
+      buttons.forEach(function (b) { b.addEventListener("click", function () { show(b.dataset.level); }); });
+      show(saved && document.getElementById(saved) ? saved : "simple");
+    })();
+  </script>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="/"><img src="/assets/kalda-logo.svg" alt="">Kalda</a>
+    <span>© <span id="year">2026</span> Kalda. A wallet you look after yourself.</span>
+  </div>
+</footer>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
