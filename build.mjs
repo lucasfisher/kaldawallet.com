@@ -113,7 +113,7 @@ function phones(names, cls = "") {
   const list = names.filter(hasShot);
   if (!list.length) return "";
   return `<div class="phones ${cls}">
-        ${list.map((n) => `<figure class="phone"><img src="/assets/screens/${n}.png" alt="Kalda app: ${SHOTS[n]}" loading="lazy"><figcaption>${SHOTS[n]}</figcaption></figure>`).join("\n        ")}
+        ${list.map((n) => `<figure class="phone"><img src="/assets/screens/${n}.png" alt="Kalda app: ${SHOTS[n]}" width="600" height="1304" loading="lazy"><figcaption>${SHOTS[n]}</figcaption></figure>`).join("\n        ")}
       </div>`;
 }
 
